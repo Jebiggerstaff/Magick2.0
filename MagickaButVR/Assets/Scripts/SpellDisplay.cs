@@ -8,6 +8,7 @@ public class SpellDisplay : MonoBehaviour
 {
     public GameObject fireball;
     public GameObject light;
+    public GameObject identifyGlow;
     public GameObject grease;
     public GameObject player;
     public GameObject playerCamera;
@@ -15,6 +16,7 @@ public class SpellDisplay : MonoBehaviour
     public GameObject spellGuide;
     public GameObject UI;
     public float scale;
+    public float identifyDistance;
 
     #region UISpellGameobjects
 
@@ -43,6 +45,7 @@ public class SpellDisplay : MonoBehaviour
     GameObject newRune2 = null;//Used to display runes on screen
     GameObject newRune3 = null;//Used to display runes on screen
     Material mat = null;//Used for telekinesis to get material of spellTarget;
+    GameObject[] identifytargets;
 
     //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
 
@@ -270,6 +273,15 @@ public class SpellDisplay : MonoBehaviour
                     }
                     break;
                 #endregion
+                #region Identify
+                case "erf":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    if (activeSpell == null)
+                    {
+                        //activate Spell UI for Identify
+                    }
+                    break;
+                #endregion
                 default:
                     break;
             }
@@ -391,6 +403,25 @@ public class SpellDisplay : MonoBehaviour
                             Instantiate(light, hit.point, transform.rotation);
                         else
                             Instantiate(light, spellGuide.transform.position, transform.rotation);
+                        Clear();
+                    }
+                    break;
+                #endregion
+                #region Identify
+                case "erf":
+                    if (activeSpell == null)
+                    {
+                        identifytargets = GameObject.FindGameObjectsWithTag("Identifiable");
+                        GameObject Glow;
+                        foreach(GameObject target in identifytargets)
+                        {
+                            if (Vector3.Distance(player.transform.position, target.transform.position) < identifyDistance) { 
+                                Glow = Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
+                                Glow.transform.localScale = target.transform.localScale;
+}
+                            
+                        }
+
                         Clear();
                     }
                     break;
