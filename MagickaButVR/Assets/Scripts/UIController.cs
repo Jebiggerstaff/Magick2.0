@@ -39,6 +39,7 @@ public class UIController : MonoBehaviour
     bool knowsHaste = false;
     bool knowsLevitation = false;
     bool knowsTelekinesis = false;
+    bool knowsLight = false;
     #endregion
 
     bool InOptionsMenu = false;
@@ -239,7 +240,15 @@ public class UIController : MonoBehaviour
                 }
                 break;
             #endregion
-
+            #region Light
+            case "frf":
+                if (knowsLight == false)
+                {
+                    knowsLight = true;
+                    KnownSpells.GetComponent<Text>().text += "\nLight F-R-F";
+                }
+                break;
+            #endregion
             default:
                 break;
         }
