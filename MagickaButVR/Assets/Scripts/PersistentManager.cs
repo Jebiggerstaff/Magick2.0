@@ -122,7 +122,7 @@ public class PersistentManager : MonoBehaviour
 		if (!SamMurdered)
 		{
 			SamMurdered = true;
-			TaskComplete(runInEditMode, "Murdered the lonely goblin that only wanted a friend.");
+			//TaskComplete(runInEditMode, "Murdered the lonely goblin that only wanted a friend.");
 		}
 		if (killedGoblins == totalGoblins)
 		{

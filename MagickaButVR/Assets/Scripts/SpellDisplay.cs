@@ -412,16 +412,13 @@ public class SpellDisplay : MonoBehaviour
                     if (activeSpell == null)
                     {
                         identifytargets = GameObject.FindGameObjectsWithTag("Identifiable");
-                        GameObject Glow;
                         foreach(GameObject target in identifytargets)
                         {
-                            if (Vector3.Distance(player.transform.position, target.transform.position) < identifyDistance) { 
-                                Glow = Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
-                                Glow.transform.localScale = target.transform.localScale;
-}
-                            
+                            if (Vector3.Distance(player.transform.position, target.transform.position) < identifyDistance) {
+                                if (target.transform.childCount == 0 || target.transform.GetChild(0).name != "IdentifyGlow(Clone)")
+                                    Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
+                            }                       
                         }
-
                         Clear();
                     }
                     break;
