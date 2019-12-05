@@ -50,6 +50,7 @@ public class UIController : MonoBehaviour
     bool knowsLevitation = false;
     bool knowsTelekinesis = false;
     bool knowsLight = false;
+    bool knowsIdentify = false;
     #endregion
 
     bool InOptionsMenu = false;
@@ -283,6 +284,15 @@ public class UIController : MonoBehaviour
                 {
                     knowsLight = true;
                     KnownSpells.GetComponent<Text>().text += "\nLight F-R-F";
+                }
+                break;
+            #endregion
+            #region Identify
+            case "erf":
+                if (knowsIdentify== false)
+                {
+                    knowsIdentify = true;
+                    KnownSpells.GetComponent<Text>().text += "\nIdentify E-R-F";
                 }
                 break;
             #endregion
