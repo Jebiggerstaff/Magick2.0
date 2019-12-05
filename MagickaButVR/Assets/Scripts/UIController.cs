@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
-
+using System;
 
 public class UIController : MonoBehaviour
 {
@@ -19,6 +19,9 @@ public class UIController : MonoBehaviour
     public GameObject HUD;
     public GameObject SpellbookUI;
     public GameObject KnownSpells;
+    public GameObject SpellsPage;
+    public GameObject CodexPage;
+    public GameObject TasksPage;
     #endregion
 
     #region Buttons
@@ -30,6 +33,13 @@ public class UIController : MonoBehaviour
     public Button PauseToOptionsButton;
     public Button PauseToCreditsButton;
     public Button PauseToMainButton;
+
+    public Button SpellsToTasksButton;
+    public Button SpellsToCodexButton;
+    public Button CodexToSpellsButton;
+    public Button TasksToSpellsButton;
+
+
     #endregion
 
     #region KnowsSpells
@@ -59,6 +69,12 @@ public class UIController : MonoBehaviour
         PauseToOptionsButton.onClick.AddListener(PauseToOptions);
         PauseToCreditsButton.onClick.AddListener(PauseToCredits);
         PauseToMainButton.onClick.AddListener(PauseToMain);
+        SpellsToTasksButton.onClick.AddListener(SpellsToTasks);
+        SpellsToCodexButton.onClick.AddListener(SpellsToCodex);
+        TasksToSpellsButton.onClick.AddListener(TasksToSpells);
+        CodexToSpellsButton.onClick.AddListener(CodexToSpells);
+
+
 
         if (VRmode == true)
         {
@@ -68,7 +84,7 @@ public class UIController : MonoBehaviour
         }
 
     }
-
+     
     private void Update()
     {
         //open pause menu
@@ -175,6 +191,27 @@ public class UIController : MonoBehaviour
     {
         Application.Quit();
         //Debug.Log("Close Game");
+    }
+
+    void SpellsToTasks()
+    {
+        SpellsPage.SetActive(false);
+        TasksPage.SetActive(true);
+    }
+    void SpellsToCodex()
+    {
+        SpellsPage.SetActive(false);
+        CodexPage.SetActive(true);
+    }
+    void TasksToSpells()
+    {
+        TasksPage.SetActive(false);
+        SpellsPage.SetActive(true);
+    }
+    void CodexToSpells()
+    {
+        CodexPage.SetActive(false);
+        SpellsPage.SetActive(true);
     }
 
     public void AddToSpellbook(string spellname)

@@ -15,6 +15,9 @@ public class SpellDisplay : MonoBehaviour
     public GameObject spellTarget;
     public GameObject spellGuide;
     public GameObject UI;
+    public GameObject HasteScreenEffect;
+    public GameObject JumpScreenEffect;
+
     public float scale;
     public float identifyDistance;
 
@@ -178,9 +181,17 @@ public class SpellDisplay : MonoBehaviour
             {
                 playerCamera.GetComponent<Camera>().fieldOfView = 60;
                 player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
+                HasteScreenEffect.SetActive(false);
             }
         }
-        
+        if (player.GetComponent<FirstPersonAIO>().jumpPower != 5)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                player.GetComponent<FirstPersonAIO>().jumpPower = 5;
+                JumpScreenEffect.SetActive(false);
+            }
+        }
 
         //Detects mouse wheel scroll, and then applies it to a spell if possible
         if (Input.mouseScrollDelta != new Vector2(0, 0))
@@ -323,6 +334,7 @@ public class SpellDisplay : MonoBehaviour
                         displayText = "";
                         jumpUI.SetActive(false);
                         activeSpell = "JUMP";
+                        JumpScreenEffect.SetActive(true);
                         DestroyRunes();
                     }
                     break;
@@ -337,6 +349,7 @@ public class SpellDisplay : MonoBehaviour
                         hasteUI.SetActive(false);
                         activeSpell = "HASTE";
                         playerCamera.GetComponent<Camera>().fieldOfView = 75;
+                        HasteScreenEffect.SetActive(true);
                         DestroyRunes();
                     }
 
@@ -522,12 +535,6 @@ public class SpellDisplay : MonoBehaviour
 
         switch (activeSpell)
         {
-            case "JUMP":
-                player.GetComponent<FirstPersonAIO>().jumpPower = 5;    // HEY LOOKIE HERE: This should probably be changed to be a variable in some way
-                break;
-            case "HASTE":
-                player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
-                break;
             case "TELEKINESIS":
                 mat.SetColor("_EmissiveColor", new Color(0, 0, 0, 0));
                 mat.DisableKeyword("_UseEmissiveIntensity");
