@@ -121,6 +121,7 @@ public class SpellDisplay : MonoBehaviour
         else if (Input.GetMouseButtonDown(1))
         {
             Clear();
+            DestroyRunes();
         }
 
         //Counts down spell timer
@@ -173,8 +174,13 @@ public class SpellDisplay : MonoBehaviour
         //Detects if haste is active and then modifies FOV
         if (player.GetComponent<FirstPersonAIO>().sprintSpeed != 7)
         {
-            //edit the FOV here... somehow
+            if (Input.GetMouseButtonDown(1))
+            {
+                playerCamera.GetComponent<Camera>().fieldOfView = 60;
+                player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
+            }
         }
+        
 
         //Detects mouse wheel scroll, and then applies it to a spell if possible
         if (Input.mouseScrollDelta != new Vector2(0, 0))
@@ -297,6 +303,7 @@ public class SpellDisplay : MonoBehaviour
                     Instantiate(fireball, new Vector3(playerCamera.transform.position.x, playerCamera.transform.position.y + .1f, playerCamera.transform.position.z), playerCamera.transform.rotation);
                     fireballUI.SetActive(false);
                     displayText = "";
+                    DestroyRunes();
                     break;
                 #endregion
                 #region Grease Pool
@@ -304,6 +311,7 @@ public class SpellDisplay : MonoBehaviour
                     Instantiate(grease, new Vector3(playerCamera.transform.position.x, playerCamera.transform.position.y + .1f, playerCamera.transform.position.z), playerCamera.transform.rotation);
                     greaseUI.SetActive(false);
                     displayText = "";
+                    DestroyRunes();
                     break;
                 #endregion
                 #region Jump
@@ -315,10 +323,7 @@ public class SpellDisplay : MonoBehaviour
                         displayText = "";
                         jumpUI.SetActive(false);
                         activeSpell = "JUMP";
-                    }
-                    else
-                    {
-                        displayText = "";
+                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -327,15 +332,14 @@ public class SpellDisplay : MonoBehaviour
                     if (activeSpell == null)
                     {
                         displayText = "";
-                        player.GetComponent<FirstPersonAIO>().sprintSpeed = 10;
+                        player.GetComponent<FirstPersonAIO>().sprintSpeed = 30;
                         spellEffectsTimer = spellLongevity;
                         hasteUI.SetActive(false);
                         activeSpell = "HASTE";
+                        playerCamera.GetComponent<Camera>().fieldOfView = 75;
+                        DestroyRunes();
                     }
-                    else
-                    {
-                        displayText = "";
-                    }
+
                     break;
                 #endregion
                 #region Levitation
@@ -353,6 +357,7 @@ public class SpellDisplay : MonoBehaviour
                             displayText = "";
                             levitationUI.SetActive(false);
                             activeSpell = "LEVITATION";
+                            DestroyRunes();
                         }
                     }
                     break;
@@ -388,6 +393,7 @@ public class SpellDisplay : MonoBehaviour
                             spellTarget.GetComponent<Rigidbody>().useGravity = false;
                             spellEffectsTimer = spellLongevity * 10;
                             activeSpell = "TELEKINESIS";
+                            DestroyRunes();
                         }
                     }
                     break;
@@ -404,6 +410,7 @@ public class SpellDisplay : MonoBehaviour
                         else
                             Instantiate(light, spellGuide.transform.position, transform.rotation);
                         Clear();
+                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -420,6 +427,7 @@ public class SpellDisplay : MonoBehaviour
                             }                       
                         }
                         Clear();
+                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -427,7 +435,6 @@ public class SpellDisplay : MonoBehaviour
                     displayText = "";
                     break;
             }
-            //Clear();
         }
     }
 
@@ -491,6 +498,25 @@ public class SpellDisplay : MonoBehaviour
         return rune;
     }
 
+    public void DestroyRunes()
+    {
+        if (newRune1 != null)
+        {
+            GameObject.Destroy(newRune1);
+            newRune1 = null;
+        }
+        if (newRune2 != null)
+        {
+            GameObject.Destroy(newRune2);
+            newRune2 = null;
+        }
+        if (newRune3 != null)
+        {
+            GameObject.Destroy(newRune3);
+            newRune3 = null;
+        }
+    }
+
     public void Clear()
     {
 
@@ -525,22 +551,6 @@ public class SpellDisplay : MonoBehaviour
         hasteUI.SetActive(false);
         telekinesisUI.SetActive(false);
         lightUI.SetActive(false);
-
-        if (newRune1 != null)
-        {
-            GameObject.Destroy(newRune1);
-            newRune1 = null;
-        }
-        if (newRune2 != null)
-        {
-            GameObject.Destroy(newRune2);
-            newRune2 = null;
-        }
-        if (newRune3 != null)
-        {
-            GameObject.Destroy(newRune3);
-            newRune3 = null;
-        }
 
         displayText = "";
         spellTarget = null;
