@@ -18,11 +18,14 @@ public class UIController : MonoBehaviour
     public GameObject spellDisplay;
     public GameObject HUD;
     public GameObject SpellbookUI;
-    public GameObject KnownSpells;
     public GameObject SpellsPage;
     public GameObject CodexPage;
     public GameObject TasksPage;
     #endregion
+
+    private GameObject[] SpellSlots;
+
+    int spellsknown=0;
 
     #region Buttons
     public Button MainToGameButton;
@@ -57,6 +60,9 @@ public class UIController : MonoBehaviour
     bool InSpellbookMenu = false;
     public bool VRmode;
 
+    
+
+
     void Start()
     {
 
@@ -75,6 +81,8 @@ public class UIController : MonoBehaviour
         TasksToSpellsButton.onClick.AddListener(TasksToSpells);
         CodexToSpellsButton.onClick.AddListener(CodexToSpells);
 
+        SpellSlots = GameObject.FindGameObjectsWithTag("SpellSlot");
+        SpellbookUI.SetActive(false);
 
 
         if (VRmode == true)
@@ -199,16 +207,19 @@ public class UIController : MonoBehaviour
         SpellsPage.SetActive(false);
         TasksPage.SetActive(true);
     }
+
     void SpellsToCodex()
     {
         SpellsPage.SetActive(false);
         CodexPage.SetActive(true);
     }
+
     void TasksToSpells()
     {
         TasksPage.SetActive(false);
         SpellsPage.SetActive(true);
     }
+
     void CodexToSpells()
     {
         CodexPage.SetActive(false);
@@ -218,6 +229,7 @@ public class UIController : MonoBehaviour
     public void AddToSpellbook(string spellname)
     {
         
+
         switch (spellname)
         {
             #region Fireball
@@ -225,19 +237,20 @@ public class UIController : MonoBehaviour
                 if (knowsFireball == false)
                 {
                     knowsFireball = true;
-                    KnownSpells.GetComponent<Text>().text += "\nFireball Q-E-E"; 
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Fireball Q-E-E";
+                    spellsknown++;
                 }
 
                 break;
             #endregion
-            #region Grease Ball
+            #region GreasePool
             case "qre":
                 if (knowsGreaseBall == false)
                 {
                     knowsGreaseBall = true;
-                    KnownSpells.GetComponent<Text>().text += "\nGrease Ball Q-R-E";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "GreaseBall Q-R-E";
+                    spellsknown++;
                 }
-
                 break;
             #endregion
             #region Jump
@@ -245,7 +258,8 @@ public class UIController : MonoBehaviour
                 if (knowsJump == false)
                 {
                     knowsJump = true;
-                    KnownSpells.GetComponent<Text>().text += "\nJump E-Q-Q";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Jump E-Q-Q";
+                    spellsknown++;
                 }
 
                 break;
@@ -255,7 +269,8 @@ public class UIController : MonoBehaviour
                 if (knowsHaste == false)
                 {
                     knowsHaste = true;
-                    KnownSpells.GetComponent<Text>().text += "\nHaste E-Q-F";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Haste E-Q-F";
+                    spellsknown++;
                 }
 
                 break;
@@ -265,7 +280,8 @@ public class UIController : MonoBehaviour
                 if (knowsLevitation == false)
                 {
                     knowsLevitation = true;
-                    KnownSpells.GetComponent<Text>().text += "\nLevitation E-E-Q";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Levitation E-E-Q";
+                    spellsknown++;
                 }
                 break;
             #endregion
@@ -274,8 +290,10 @@ public class UIController : MonoBehaviour
                 if (knowsTelekinesis == false)
                 {
                     knowsTelekinesis = true;
-                    KnownSpells.GetComponent<Text>().text += "\nTelekinesis R-E-Q";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Telekinesis R-E-Q";
+                    spellsknown++;
                 }
+
                 break;
             #endregion
             #region Light
@@ -283,19 +301,24 @@ public class UIController : MonoBehaviour
                 if (knowsLight == false)
                 {
                     knowsLight = true;
-                    KnownSpells.GetComponent<Text>().text += "\nLight F-R-F";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Light F-R-F";
+                    spellsknown++;
                 }
+
                 break;
             #endregion
             #region Identify
             case "erf":
-                if (knowsIdentify== false)
+                if (knowsIdentify == false)
                 {
                     knowsIdentify = true;
-                    KnownSpells.GetComponent<Text>().text += "\nIdentify E-R-F";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Identify E-R-F";
+                    spellsknown++;
                 }
+
                 break;
             #endregion
+
             default:
                 break;
         }
