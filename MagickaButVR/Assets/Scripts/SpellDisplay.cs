@@ -314,7 +314,6 @@ public class SpellDisplay : MonoBehaviour
                     Instantiate(fireball, new Vector3(playerCamera.transform.position.x, playerCamera.transform.position.y + .1f, playerCamera.transform.position.z), playerCamera.transform.rotation);
                     fireballUI.SetActive(false);
                     displayText = "";
-                    DestroyRunes();
                     break;
                 #endregion
                 #region Grease Pool
@@ -322,7 +321,6 @@ public class SpellDisplay : MonoBehaviour
                     Instantiate(grease, new Vector3(playerCamera.transform.position.x, playerCamera.transform.position.y + .1f, playerCamera.transform.position.z), playerCamera.transform.rotation);
                     greaseUI.SetActive(false);
                     displayText = "";
-                    DestroyRunes();
                     break;
                 #endregion
                 #region Jump
@@ -335,7 +333,6 @@ public class SpellDisplay : MonoBehaviour
                         jumpUI.SetActive(false);
                         activeSpell = "JUMP";
                         JumpScreenEffect.SetActive(true);
-                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -350,7 +347,6 @@ public class SpellDisplay : MonoBehaviour
                         activeSpell = "HASTE";
                         playerCamera.GetComponent<Camera>().fieldOfView = 75;
                         HasteScreenEffect.SetActive(true);
-                        DestroyRunes();
                     }
 
                     break;
@@ -370,7 +366,6 @@ public class SpellDisplay : MonoBehaviour
                             displayText = "";
                             levitationUI.SetActive(false);
                             activeSpell = "LEVITATION";
-                            DestroyRunes();
                         }
                     }
                     break;
@@ -406,7 +401,6 @@ public class SpellDisplay : MonoBehaviour
                             spellTarget.GetComponent<Rigidbody>().useGravity = false;
                             spellEffectsTimer = spellLongevity * 10;
                             activeSpell = "TELEKINESIS";
-                            DestroyRunes();
                         }
                     }
                     break;
@@ -422,8 +416,6 @@ public class SpellDisplay : MonoBehaviour
                             Instantiate(light, hit.point, transform.rotation);
                         else
                             Instantiate(light, spellGuide.transform.position, transform.rotation);
-                        Clear();
-                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -439,8 +431,6 @@ public class SpellDisplay : MonoBehaviour
                                     Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
                             }                       
                         }
-                        Clear();
-                        DestroyRunes();
                     }
                     break;
                 #endregion
@@ -448,7 +438,9 @@ public class SpellDisplay : MonoBehaviour
                     displayText = "";
                     break;
             }
-        }
+			Clear();
+			DestroyRunes();
+		}
     }
 
     //Uses raycasts to find what a spell is targeting
