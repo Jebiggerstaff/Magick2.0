@@ -552,7 +552,7 @@ public class SpellDisplay : MonoBehaviour
         lightUI.SetActive(false);
 
         displayText = "";
-        spellTarget = null;
+        spellTarget = player;
         activeSpell = null;
     }
 }
