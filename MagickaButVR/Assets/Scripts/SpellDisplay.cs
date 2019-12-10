@@ -307,6 +307,7 @@ public class SpellDisplay : MonoBehaviour
         //Activates Spells
         if (Input.GetMouseButtonDown(0) && displayText.Length == 3 && activeSpell == null)
         {
+            
             switch (displayText)
             {
                 #region Fireball
@@ -438,7 +439,6 @@ public class SpellDisplay : MonoBehaviour
                     displayText = "";
                     break;
             }
-			Clear();
 			DestroyRunes();
 		}
     }
