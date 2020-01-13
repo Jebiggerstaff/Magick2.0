@@ -12,6 +12,7 @@ public class SamBrain : MonoBehaviour
 	Ray ray;
 	int layerMask;
 	Vector3 home;
+	public string homeZone;
 
 	void Start()
     {
@@ -39,11 +40,20 @@ public class SamBrain : MonoBehaviour
 		if (enemy != null)
 		{
 			MoveToTarget();
-			if (PersistentManager.instance.GetZone() != "Forest")
+			if (PersistentManager.instance.GetZone() != homeZone)
 				DeAggro();
 		}
 	}
 
+	void OnTriggerEnter(Collider obj)
+	{
+		if(obj.tag == "Player" && enemy == null)
+		{
+			enemy = obj.gameObject;
+		}
+	}
+
+	/*
 	void OnTriggerStay(Collider obj)
 	{
 		if(obj.tag == "Player")
@@ -56,7 +66,9 @@ public class SamBrain : MonoBehaviour
             }
 		}
 	}
+	*/
 
+	/*
 	void GetTarget()
 	{
 		if (Physics.Raycast(ray, out hit, 50, layerMask))
@@ -69,6 +81,7 @@ public class SamBrain : MonoBehaviour
 		}
 		
 	}
+	*/
 
 	void MoveToTarget()
 	{
@@ -84,18 +97,8 @@ public class SamBrain : MonoBehaviour
 		enemy = tmp;
         enemy = null;
 		gameObject.GetComponent<Wander>().enabled = true;
-		//Home();
 	}
 
-	/*void Home()
-	{
-        if (gameObject.transform.position != home)
-        {
-            moveSam.SetDestination(home);
-        }
-       
-	}
-	*/
 	void Shank()
 	{
 		if(enemy.tag == "Player")
