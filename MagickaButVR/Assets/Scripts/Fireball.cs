@@ -37,24 +37,26 @@ public class Fireball : MonoBehaviour
 
 	void OnTriggerEnter(Collider obj)
 	{
-		GameObject temp;
+		if (obj.tag != "FireballIgnore")
+		{
+			GameObject temp;
 
-        if(lifeTimer <= 9.9 && obj.tag != "Task")
-        {
-            collide = true;
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-
-			if(obj.transform.parent != null)
+			if (lifeTimer <= 9.9 && obj.tag != "Task")
 			{
-				temp = obj.transform.parent.gameObject;
-				temp.AddComponent<OnFire>();
-				Debug.Log(temp.name);
+				collide = true;
+				GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+				transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
+				if (obj.transform.parent != null)
+				{
+					temp = obj.transform.parent.gameObject;
+					temp.AddComponent<OnFire>();
+					Debug.Log(temp.name);
+				}
+				Debug.Log(obj.name);
+				//Destroy(this);
 			}
-			Debug.Log(obj.name);
-			//Destroy(this);
-        }
-        
+		}
 
 
         
