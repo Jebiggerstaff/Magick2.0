@@ -6,11 +6,15 @@ public class SpellMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
 {
 
     public GameObject SpellDesc;
+    public GameObject SpellIcon;
+    public GameObject SpellTitle;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (this.GetComponent<Text>().text == "Fireball Q-E-E")
         {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Fireball";
             SpellDesc.GetComponent<Text>().text = "Dis A fire Ball";
         }
         if (this.GetComponent<Text>().text == "GreaseBall Q-R-E")
@@ -50,5 +54,7 @@ public class SpellMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         SpellDesc.GetComponent<Text>().text = "";
+        SpellTitle.GetComponent<Text>().text = "";
+        SpellIcon.GetComponent<Image>().sprite = null;
     }
 }
