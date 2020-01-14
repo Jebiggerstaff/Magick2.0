@@ -42,16 +42,18 @@ public class PersistentManager : MonoBehaviour
 		}
 		
 		player = GameObject.FindGameObjectWithTag("Player");
-		zone = "Town";
+		zone = "Village";
 	}
 
 	void Update()
 	{
 		#region Task System
-		if (!fullyExplored)
+		if (true)
 		{
+			Debug.Log("Exploring");
 			if (!enteredForest && zone == "Forest")
 			{
+				Debug.Log("Forest Entered");
 				enteredForest = true;
 				TaskComplete(true, "Forest discovered");
 			}
@@ -132,7 +134,7 @@ public class PersistentManager : MonoBehaviour
 	}
 
 	#region set variables
-	public void SetZone(string z) { zone = z; }
+	public void SetZone(string z) { zone = z; Debug.Log(zone); }
 	public void SetPlayer(GameObject p) { player = p; }
 	#endregion
 	#region get variables

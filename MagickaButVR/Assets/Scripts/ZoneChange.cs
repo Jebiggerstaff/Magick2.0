@@ -8,7 +8,7 @@ public class ZoneChange : MonoBehaviour
 
     void OnTriggerEnter(Collider obj)
 	{
-		if(obj.tag == "Player")
+		if(obj.tag == "Player" && PersistentManager.instance.GetZone() != zone)
 		{
 			PersistentManager.instance.SetZone(zone);
 		}
