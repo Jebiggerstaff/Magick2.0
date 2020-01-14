@@ -48,12 +48,10 @@ public class PersistentManager : MonoBehaviour
 	void Update()
 	{
 		#region Task System
-		if (true)
+		if (!fullyExplored)
 		{
-			Debug.Log("Exploring");
 			if (!enteredForest && zone == "Forest")
 			{
-				Debug.Log("Forest Entered");
 				enteredForest = true;
 				TaskComplete(true, "Forest discovered");
 			}
