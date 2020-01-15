@@ -2,15 +2,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpellMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
 
     public GameObject SpellDesc;
     public GameObject SpellIcon;
     public GameObject SpellTitle;
+    public GameObject VillageTaskList;
+    public GameObject ForestTaskList;
+    public GameObject CastleTaskList;
+    public GameObject MountainTaskList;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        //Spell Page
         if (this.GetComponent<Text>().text == "Fireball Q-E-E")
         {
             SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
@@ -49,6 +54,24 @@ public class SpellMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
         {
             SpellDesc.GetComponent<Text>().text = "I Taste Colors";
         }
+
+        //Tasks Page
+        if(this.GetComponent<Text>().text == "Village Tasks")
+        {
+            VillageTaskList.SetActive(true);
+        }
+        if (this.GetComponent<Text>().text == "Forest Tasks")
+        {
+            ForestTaskList.SetActive(true);
+        }
+        if (this.GetComponent<Text>().text == "Castle Tasks")
+        {
+            CastleTaskList.SetActive(true);
+        }
+        if (this.GetComponent<Text>().text == "Mountain Tasks")
+        {
+            MountainTaskList.SetActive(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -56,5 +79,9 @@ public class SpellMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
         SpellDesc.GetComponent<Text>().text = "";
         SpellTitle.GetComponent<Text>().text = "";
         SpellIcon.GetComponent<Image>().sprite = null;
+        VillageTaskList.SetActive(false);
+        ForestTaskList.SetActive(false);
+        CastleTaskList.SetActive(false);
+        MountainTaskList.SetActive(false);
     }
 }
