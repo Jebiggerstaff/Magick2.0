@@ -66,9 +66,7 @@ public class SamBrain : MonoBehaviour
             }
 		}
 	}
-	*/
 
-	/*
 	void GetTarget()
 	{
 		if (Physics.Raycast(ray, out hit, 50, layerMask))
