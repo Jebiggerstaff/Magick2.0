@@ -12,6 +12,7 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
     public GameObject ForestTaskList;
     public GameObject CastleTaskList;
     public GameObject MountainTaskList;
+    public GameObject MiscTaskList;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -73,8 +74,12 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         {
             MountainTaskList.SetActive(true);
         }
-		#endregion
-	}
+        if (this.GetComponent<Text>().text == "Misc. Tasks")
+        {
+            MiscTaskList.SetActive(true);
+        }
+        #endregion
+    }
 
 	public void OnPointerExit(PointerEventData eventData)
     {
@@ -85,5 +90,6 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         ForestTaskList.SetActive(false);
         CastleTaskList.SetActive(false);
         MountainTaskList.SetActive(false);
+        MiscTaskList.SetActive(false);
     }
 }
