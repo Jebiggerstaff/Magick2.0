@@ -15,8 +15,8 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Spell Page
-        if (this.GetComponent<Text>().text == "Fireball Q-E-E")
+		# region Spell Page
+		if (this.GetComponent<Text>().text == "Fireball Q-E-E")
         {
             SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
             SpellTitle.GetComponent<Text>().text = "Fireball";
@@ -54,9 +54,10 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         {
             SpellDesc.GetComponent<Text>().text = "I Taste Colors";
         }
+		#endregion
 
-        //Tasks Page
-        if(this.GetComponent<Text>().text == "Village Tasks")
+		# region Tasks Page
+		if (this.GetComponent<Text>().text == "Village Tasks")
         {
             VillageTaskList.SetActive(true);
         }
@@ -72,9 +73,10 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         {
             MountainTaskList.SetActive(true);
         }
-    }
+		#endregion
+	}
 
-    public void OnPointerExit(PointerEventData eventData)
+	public void OnPointerExit(PointerEventData eventData)
     {
         SpellDesc.GetComponent<Text>().text = "";
         SpellTitle.GetComponent<Text>().text = "";
