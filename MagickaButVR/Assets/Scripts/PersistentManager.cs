@@ -15,28 +15,43 @@ public class PersistentManager : MonoBehaviour
 	double timer;
 
 	#region Task Flags & Check Boxes
-	public bool enteredForest = false;
-	public GameObject entereForestCB;
-	public bool enteredCave = false;
-	public GameObject enteredCaveCB;
-	public bool enteredCastle = false;
-	public GameObject enteredCastleCB;
-	public bool fullyExplored = false;
-	public GameObject fullyExploredCB;
+	//Village Set
+	public bool firstSpell = false;
 	public bool SamMurdered = false;
+	public bool repairBridge = false;
 	public GameObject SamMurderedCB;
+	public GameObject firstSpellCB;
+	public GameObject repairBridgeCB;
+	//Forest Set
+	public bool enteredForest = false;
+	public bool surviveAmbush = false;
 	public bool killedAllGoblins = false;
 	public int totalGoblins;
-	public int killedGoblins = 0;
+	public int killedGoblins;
+	public bool escapeForest = false;
+	public bool burnVines = false;
+	public GameObject enteredForestCB;
+	public GameObject surviveAmbushCB;
 	public GameObject killedAllGoblinsCB;
+	public GameObject escapeForestCB;
+	public GameObject burnVinesCB;
+	//Castle Set
+	public bool enteredCastle = false;
 	public bool gateOpened = false;
+	public bool RecoverCure = false;
+	public GameObject enteredCastleCB;
 	public GameObject gateOpenedCB;
-	public bool forestEscaped = false;
-	public GameObject forestEscapedCB;
-	public bool overgrownPathNavigated = false;
-	public GameObject overgrownPathNavigatedCB;
-	public bool survivedAmbush = false;
-	public GameObject survivedAmbushCB;
+	public GameObject RecoverCureCB;
+	//Cave Set
+	public bool enteredCave = false;
+	public bool killAllWolves = false;
+	public bool openPortcullis = false;
+	public GameObject enteredCaveCB;
+	public GameObject killAllWolvesCB;
+	public GameObject openPortcullisCB;
+	//Misc Set
+	public bool fullyExplored = false;
+	public GameObject fullyExploredCB;
 	#endregion
 
 	private void Awake()
@@ -63,22 +78,26 @@ public class PersistentManager : MonoBehaviour
 			if (!enteredForest && zone == "Forest")
 			{
 				enteredForest = true;
+				enteredForestCB.SetActive(true);
 				TaskComplete(true, "Forest discovered");
 			}
 			else if (!enteredCastle && zone == "Castle")
 			{
-			enteredCastle = true;
+				enteredCastle = true;
+				enteredCastleCB.SetActive(true);
 				TaskComplete(true, "Castle discovered");
 			}
 			else if (!enteredCave && zone == "Cave")
 			{
 				enteredCave = true;
+				enteredCaveCB.SetActive(true);
 				TaskComplete(true, "Cave discovered");
 			}
 
 			if (enteredForest && enteredCastle && enteredCave)
 			{
 				fullyExplored = true;
+				fullyExploredCB.SetActive(true);
 				TaskComplete(true, "All locations discovered");
 			}
 		}
@@ -121,9 +140,9 @@ public class PersistentManager : MonoBehaviour
 		killedAllGoblins = false;
 		killedGoblins = 0;
 		gateOpened = false;
-		forestEscaped = false;
-		overgrownPathNavigated = false;
-		survivedAmbush = false;
+		escapeForest = false;
+		burnVines = false;
+		surviveAmbush = false;
 	}
 
 	public void GoblinKilled(bool b)
@@ -132,11 +151,13 @@ public class PersistentManager : MonoBehaviour
 		if (!SamMurdered)
 		{
 			SamMurdered = true;
-			//TaskComplete(runInEditMode, "Murdered the lonely goblin that only wanted a friend.");
+			SamMurderedCB.SetActive(true);
+			TaskComplete(true, "Murdered the lonely goblin that only wanted a friend.");
 		}
 		if (killedGoblins == totalGoblins)
 		{
 			killedAllGoblins = true;
+			killedAllGoblinsCB.SetActive(true);
 			TaskComplete(true, "Defeated the goblin threat.");
 		}
 	}
@@ -144,8 +165,10 @@ public class PersistentManager : MonoBehaviour
 	#region set variables
 	public void SetZone(string z) { zone = z; Debug.Log(zone); }
 	public void SetPlayer(GameObject p) { player = p; }
+	public void SetFirstSpell(bool b) { firstSpell = b; }
 	#endregion
 	#region get variables
 	public string GetZone() { return zone; }
+	public bool GetFirstSpell() { return firstSpell; }
 	#endregion
 }
