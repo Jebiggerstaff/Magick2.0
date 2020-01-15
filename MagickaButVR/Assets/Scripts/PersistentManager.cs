@@ -165,8 +165,10 @@ public class PersistentManager : MonoBehaviour
 	#region set variables
 	public void SetZone(string z) { zone = z; Debug.Log(zone); }
 	public void SetPlayer(GameObject p) { player = p; }
+	public void SetFirstSpell(bool b) { firstSpell = b; }
 	#endregion
 	#region get variables
 	public string GetZone() { return zone; }
+	public bool GetFirstSpell() { return firstSpell; }
 	#endregion
 }

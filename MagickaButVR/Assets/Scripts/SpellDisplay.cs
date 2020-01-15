@@ -307,7 +307,8 @@ public class SpellDisplay : MonoBehaviour
         //Activates Spells
         if (Input.GetMouseButtonDown(0) && displayText.Length == 3 && activeSpell == null)
         {
-            
+			if (!PersistentManager.instance.GetFirstSpell())
+				PersistentManager.instance.SetFirstSpell(true);
             switch (displayText)
             {
                 #region Fireball
