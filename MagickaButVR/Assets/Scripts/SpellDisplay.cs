@@ -17,6 +17,7 @@ public class SpellDisplay : MonoBehaviour
     public GameObject UI;
     public GameObject HasteScreenEffect;
     public GameObject JumpScreenEffect;
+    public GameObject spawnedLight = null;
 
     public float scale;
     public float identifyDistance;
@@ -410,13 +411,21 @@ public class SpellDisplay : MonoBehaviour
                 case "frf":
                     if (activeSpell == null)
                     {
+                        displayText = "";
+                        lightUI.SetActive(false);
                         int layerMask = 0 << 8;
                         layerMask = ~layerMask;
                         RaycastHit hit;
+                        if (spawnedLight != null)
+                        {
+                            Destroy(spawnedLight);
+                        }                
                         if (Physics.Raycast(new Ray(playerCamera.transform.position, playerCamera.transform.forward), out hit, 9.9f, layerMask))
-                            Instantiate(light, hit.point, transform.rotation);
+                        {
+                            spawnedLight = Instantiate(light, hit.point, transform.rotation);
+                        }
                         else
-                            Instantiate(light, spellGuide.transform.position, transform.rotation);
+                             spawnedLight = Instantiate(light, spellGuide.transform.position, transform.rotation);
                     }
                     break;
                 #endregion
@@ -537,6 +546,11 @@ public class SpellDisplay : MonoBehaviour
                 Destroy(spellTarget.GetComponent<Levitate>());
                 spellTarget.GetComponent<Rigidbody>().useGravity = true;
                 spellTarget.GetComponent<Rigidbody>().freezeRotation = false;
+                break;
+            case "HASTE":
+                playerCamera.GetComponent<Camera>().fieldOfView = 60;
+                player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
+                HasteScreenEffect.SetActive(false);
                 break;
             default:
                 displayText = "";

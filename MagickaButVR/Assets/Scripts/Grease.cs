@@ -37,8 +37,8 @@ public class Grease : MonoBehaviour
         {
             Playercollision = true;
             trigger = obj;
-            startWalkSpeed = obj.GetComponent<FirstPersonAIO>().walkSpeed;
-            startSprintSpeed = obj.GetComponent<FirstPersonAIO>().sprintSpeed;
+            startWalkSpeed = 4;
+            startSprintSpeed = 7;
         }
     }
 
