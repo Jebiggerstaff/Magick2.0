@@ -14,19 +14,29 @@ public class PersistentManager : MonoBehaviour
 	public Text taskDesc;
 	double timer;
 
-	#region Task Flags
+	#region Task Flags & Check Boxes
 	public bool enteredForest = false;
+	public GameObject entereForestCB;
 	public bool enteredCave = false;
+	public GameObject enteredCaveCB;
 	public bool enteredCastle = false;
+	public GameObject enteredCastleCB;
 	public bool fullyExplored = false;
+	public GameObject fullyExploredCB;
 	public bool SamMurdered = false;
+	public GameObject SamMurderedCB;
 	public bool killedAllGoblins = false;
 	public int totalGoblins;
 	public int killedGoblins = 0;
+	public GameObject killedAllGoblinsCB;
 	public bool gateOpened = false;
+	public GameObject gateOpenedCB;
 	public bool forestEscaped = false;
+	public GameObject forestEscapedCB;
 	public bool overgrownPathNavigated = false;
+	public GameObject overgrownPathNavigatedCB;
 	public bool survivedAmbush = false;
+	public GameObject survivedAmbushCB;
 	#endregion
 
 	private void Awake()
