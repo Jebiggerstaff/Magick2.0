@@ -248,7 +248,7 @@ public class UIController : MonoBehaviour
                 if (knowsGreaseBall == false)
                 {
                     knowsGreaseBall = true;
-                    SpellSlots[spellsknown].GetComponent<Text>().text = "GreaseBall Q-R-E";
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Tar Pool Q-R-E";
                     spellsknown++;
                 }
                 break;
