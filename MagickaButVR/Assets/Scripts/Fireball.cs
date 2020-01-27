@@ -46,19 +46,12 @@ public class Fireball : MonoBehaviour
 				collide = true;
 				GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 				transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-
-				if (obj.transform.parent != null)
-				{
-					temp = obj.transform.parent.gameObject;
-					temp.AddComponent<OnFire>();
-					Debug.Log(temp.name);
-				}
-				Debug.Log(obj.name);
+                temp = obj.gameObject;
+                temp.AddComponent<OnFire>();
+                //Debug.Log(temp.name + "temp");
 				//Destroy(this);
 			}
 		}
-
-
-        
     }
+
 }

@@ -194,7 +194,8 @@ public class FirstPersonAIO : MonoBehaviour {
     
     [SerializeField] [Tooltip("Volume to play the Footsteps with.")] [Range(0,10)] private float Volume = 5f;
     [Space(4, order = 13)]
-    [SerializeField] [Tooltip("The Sound made when jumping. Not Used in Dynamic Foot Steps mode.")] private AudioClip jumpSound = null;
+    [SerializeField] [Tooltip("The Sound made when jumping. Not Used in Dynamic Foot Steps mode.")] private AudioClip jumpSound1 = null;
+    [SerializeField] [Tooltip("The Sound made when jumping. Not Used in Dynamic Foot Steps mode.")] private AudioClip jumpSound2 = null;
     [SerializeField] [Tooltip("The Sound made when landing from a jump or a fall. Not Used in Dynamic Foot Steps mode.")] private AudioClip landSound = null;
     [SerializeField] [Tooltip("Determines Whether to use movement Sounds.")] private bool _useFootStepSounds = false;
     [SerializeField] [Tooltip("Foot step Sounds. Will also act as a fall back for the Dynamic Foot Steps.")] private AudioClip[] footStepSounds = null;
@@ -621,7 +622,12 @@ public class BETA_SETTINGS{
                     {
                         if(previousGrounded)
                         {
-                            if(_useFootStepSounds){ audioSource.PlayOneShot(jumpSound,Volume/10); }
+                            if(_useFootStepSounds){
+                                if(Random.Range(0,2) == 0)
+                                    audioSource.PlayOneShot(jumpSound1,Volume/10);
+                                else
+                                    audioSource.PlayOneShot(jumpSound2, Volume / 10);
+                        }
                         }
                         previousGrounded = false;
                     }
@@ -650,7 +656,12 @@ public class BETA_SETTINGS{
                 {
                     if(previousGrounded)
                     {
-                        if(_useFootStepSounds) { audioSource.PlayOneShot(jumpSound,Volume/10); }
+                        if(_useFootStepSounds) {
+                            if (Random.Range(0, 2) == 0)
+                            audioSource.PlayOneShot(jumpSound1, Volume / 10);
+                            else
+                                audioSource.PlayOneShot(jumpSound2, Volume / 10);
+                        }
                     }
                     previousGrounded = false;
                 }

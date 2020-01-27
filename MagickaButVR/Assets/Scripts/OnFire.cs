@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class OnFire : MonoBehaviour
 {
-
-
-    void Start()
-    {
-        
-    }
+    private bool Dying = false;
 
     void Update()
     {
-		if (gameObject.tag == "Enemy")
+		if (gameObject.tag == "Enemy" && gameObject.name=="Sam")
 		{
-			Debug.Log("Killing: " + gameObject.name);
-			PersistentManager.instance.GoblinKilled(true);
-			Destroy(gameObject);
+            if (Dying == false)
+            {
+                gameObject.GetComponent<AudioSource>().Play();
+                Invoke("KillSam", .552f);
+                Dying = true;
+               
+            }
 		}
+    }
+
+    void KillSam()
+    {
+        PersistentManager.instance.GoblinKilled(true);
+        Dying = false;
+        Destroy(gameObject);
     }
 }
