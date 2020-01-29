@@ -60,7 +60,8 @@ public class UIController : MonoBehaviour
     bool InSpellbookMenu = false;
     public bool VRmode;
 
-    
+    public AudioClip PageTurn;
+    public AudioClip BookOpen;
 
 
     void Start()
@@ -130,6 +131,7 @@ public class UIController : MonoBehaviour
             Cursor.visible = true;
             SpellbookUI.SetActive(true);
             spellDisplay.GetComponent<SpellDisplay>().Clear();
+            OpenBook();
         }
         //close Spellbook
         else if(Input.GetKeyDown(KeyCode.Tab) && InSpellbookMenu == true)
@@ -141,6 +143,7 @@ public class UIController : MonoBehaviour
             HUD.SetActive(true);
             Cursor.visible = false;
             SpellbookUI.SetActive(false);
+            OpenBook();
         }
 
     }
@@ -206,24 +209,28 @@ public class UIController : MonoBehaviour
     {
         SpellsPage.SetActive(false);
         TasksPage.SetActive(true);
+        TurnPage();
     }
 
     void SpellsToCodex()
     {
         SpellsPage.SetActive(false);
         CodexPage.SetActive(true);
+        TurnPage();
     }
 
     void TasksToSpells()
     {
         TasksPage.SetActive(false);
         SpellsPage.SetActive(true);
+        TurnPage();
     }
 
     void CodexToSpells()
     {
         CodexPage.SetActive(false);
         SpellsPage.SetActive(true);
+        TurnPage();
     }
 
     public void AddToSpellbook(string spellname)
@@ -322,6 +329,17 @@ public class UIController : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void TurnPage()
+    {
+        GetComponent<AudioSource>().clip = PageTurn;
+        GetComponent<AudioSource>().Play();
+    }
+    public void OpenBook()
+    {
+        GetComponent<AudioSource>().clip = BookOpen;
+        GetComponent<AudioSource>().Play();
     }
 
 }

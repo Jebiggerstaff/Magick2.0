@@ -7,6 +7,8 @@ public class Fireball : MonoBehaviour
     float lifeTimer = 10;
     float explosionTimer = 3;
     bool collide = false;
+
+    public AudioClip Explosion;
     void Start()
     {
         
@@ -48,10 +50,17 @@ public class Fireball : MonoBehaviour
 				transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 temp = obj.gameObject;
                 temp.AddComponent<OnFire>();
+                GetComponent<AudioSource>().clip = Explosion;
+                GetComponent<AudioSource>().loop = false;
+                GetComponent<AudioSource>().volume = 1f;
+                GetComponent<AudioSource>().Play();
                 //Debug.Log(temp.name + "temp");
-				//Destroy(this);
+                Invoke("DestoryThis", Explosion.length);
 			}
 		}
     }
-
+    void DestoryThis()
+    {
+        Destroy(gameObject);
+    }
 }
