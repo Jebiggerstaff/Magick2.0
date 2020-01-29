@@ -13,6 +13,8 @@ public class PersistentManager : MonoBehaviour
 	public GameObject taskComplete;
 	public Text taskDesc;
 	double timer;
+    public AudioClip TaskCompleteSound;
+    public GameObject UI;
 
 	#region Task Flags & Check Boxes
 	//Village Set
@@ -128,6 +130,8 @@ public class PersistentManager : MonoBehaviour
 		taskComplete.SetActive(active);
 		taskDesc.text = desc;
 		timer = 5;
+        UI.GetComponent<AudioSource>().clip = TaskCompleteSound;
+        UI.GetComponent<AudioSource>().Play();
 	}
 
 	public void ResetTasks()
