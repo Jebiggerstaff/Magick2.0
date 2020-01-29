@@ -104,11 +104,12 @@ public class PersistentManager : MonoBehaviour
 			}
 		}
 		#endregion
-
+        
 		if (timer > 0)
 			timer -= Time.deltaTime;
 		else if (timer <= 0)
 			TaskComplete(false, "");
+            
 	}
 
 	void FixedUpdate()
@@ -130,8 +131,11 @@ public class PersistentManager : MonoBehaviour
 		taskComplete.SetActive(active);
 		taskDesc.text = desc;
 		timer = 5;
-        UI.GetComponent<AudioSource>().clip = TaskCompleteSound;
-        UI.GetComponent<AudioSource>().Play();
+        if (active == true)
+        {
+            UI.GetComponent<AudioSource>().clip = TaskCompleteSound;
+            UI.GetComponent<AudioSource>().Play();
+        }
 	}
 
 	public void ResetTasks()
