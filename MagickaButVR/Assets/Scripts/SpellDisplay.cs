@@ -51,6 +51,8 @@ public class SpellDisplay : MonoBehaviour
     Material mat = null;//Used for telekinesis to get material of spellTarget;
     GameObject[] identifytargets;
 
+    public AudioClip hasteSE;
+
     //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
 
 
@@ -67,9 +69,12 @@ public class SpellDisplay : MonoBehaviour
             input = Input.inputString.ToLower();
             if (input == "q" || input == "e" || input == "r" || input == "f")
             {
+
                 //ensures spells only go to 3 commands
                 if (displayText.Length < 3)
                 {
+                    
+
                     //Display rune
                     switch (input)
                     {
@@ -350,6 +355,8 @@ public class SpellDisplay : MonoBehaviour
                         activeSpell = "HASTE";
                         playerCamera.GetComponent<Camera>().fieldOfView = 75;
                         HasteScreenEffect.SetActive(true);
+                        player.GetComponent<AudioSource>().clip = hasteSE;
+                        player.GetComponent<AudioSource>().Play();
                     }
 
                     break;
