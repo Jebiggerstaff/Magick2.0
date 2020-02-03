@@ -53,6 +53,7 @@ public class SpellDisplay : MonoBehaviour
 
     public AudioClip hasteSE;
     public AudioClip JumpSE;
+    public AudioClip IdentifySE;
 
 
     //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
@@ -462,6 +463,8 @@ public class SpellDisplay : MonoBehaviour
                                     Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
                             }                       
                         }
+                        player.GetComponent<AudioSource>().clip = IdentifySE;
+                        player.GetComponent<AudioSource>().Play();
                     }
                     break;
                 #endregion
