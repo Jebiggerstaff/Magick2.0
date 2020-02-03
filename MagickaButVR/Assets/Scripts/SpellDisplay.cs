@@ -305,7 +305,12 @@ public class SpellDisplay : MonoBehaviour
                     }
                     break;
                 #endregion
-                default:
+                #region Rain
+                case "qfe":
+                    Debug.Log("Make it rain");
+                    break;
+				#endregion
+				default:
                     break;
             }
         }
@@ -452,7 +457,13 @@ public class SpellDisplay : MonoBehaviour
                     }
                     break;
                 #endregion
-                default:
+                #region Rain
+                case "qfe":
+                    Debug.Log("Raining");
+                    Instantiate(Resources.Load("Rain Cloud"), player.transform.position + (Vector3.up * 50), player.transform.rotation);
+                    break;
+				#endregion
+				default:
                     displayText = "";
                     break;
             }
