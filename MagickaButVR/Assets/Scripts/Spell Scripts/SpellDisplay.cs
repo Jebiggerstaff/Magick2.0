@@ -52,6 +52,8 @@ public class SpellDisplay : MonoBehaviour
     GameObject[] identifytargets;
 
     public AudioClip hasteSE;
+    public AudioClip JumpSE;
+
 
     //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
 
@@ -192,6 +194,11 @@ public class SpellDisplay : MonoBehaviour
         }
         if (player.GetComponent<FirstPersonAIO>().jumpPower != 5)
         {
+
+            if (Input.GetButtonDown("Jump")){
+                player.GetComponent<AudioSource>().Play();
+            }
+
             if (Input.GetMouseButtonDown(1))
             {
                 player.GetComponent<FirstPersonAIO>().jumpPower = 5;
@@ -346,6 +353,7 @@ public class SpellDisplay : MonoBehaviour
                         jumpUI.SetActive(false);
                         activeSpell = "JUMP";
                         JumpScreenEffect.SetActive(true);
+                        player.GetComponent<AudioSource>().clip = JumpSE;
                     }
                     break;
                 #endregion
