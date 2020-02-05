@@ -311,7 +311,7 @@ public class SpellDisplay : MonoBehaviour
                     UI.GetComponent<UIController>().AddToSpellbook(displayText);
                     if (activeSpell == null)
                     {
-                        //activate Spell UI for Identify
+                        identifyUI.SetActive(true);
                     }
                     break;
                 #endregion
