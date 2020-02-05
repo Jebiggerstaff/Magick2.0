@@ -33,6 +33,7 @@ public class SpellDisplay : MonoBehaviour
     public GameObject lightUI;
     public GameObject identifyUI;
     public GameObject rainUI;
+    public GameObject polymorphUI;
 
     #endregion
 
@@ -52,6 +53,7 @@ public class SpellDisplay : MonoBehaviour
     GameObject newRune3 = null;//Used to display runes on screen
     Material mat = null;//Used for telekinesis to get material of spellTarget;
     GameObject[] identifytargets;
+    Vector3 polyTemp;
 
     public AudioClip hasteSE;
     public AudioClip JumpSE;
@@ -239,6 +241,18 @@ public class SpellDisplay : MonoBehaviour
                     }
                     break;
                 #endregion
+                #region POLYMORPH
+                case "POLYMORPH":
+                    if(spellTarget.transform.lossyScale.magnitude <= polyTemp.magnitude*1.5 && Input.mouseScrollDelta.y >= 0)
+                    {                     
+                        spellTarget.transform.localScale += new Vector3(.1f,.1f,.1f);           
+                    }
+                    else if (spellTarget.transform.lossyScale.magnitude >= polyTemp.magnitude * .5 && Input.mouseScrollDelta.y <= 0)
+                    {
+                        spellTarget.transform.localScale -= new Vector3(.1f, .1f, .1f);
+                    }
+                    break;
+                #endregion
                 default:
                     break;
             }
@@ -323,8 +337,17 @@ public class SpellDisplay : MonoBehaviour
                         rainUI.SetActive(true);
                     }
                     break;
-				#endregion
-				default:
+                #endregion
+                #region Polymorph
+                case "ref":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    if (activeSpell == null)
+                    {
+                        polymorphUI.SetActive(true);
+                    }
+                    break;
+                #endregion
+                default:
                     break;
             }
         }
@@ -480,8 +503,23 @@ public class SpellDisplay : MonoBehaviour
                     rainUI.SetActive(false);
                     Instantiate(Resources.Load("Rain Cloud"), player.transform.position + (Vector3.up * 50), player.transform.rotation);
                     break;
-				#endregion
-				default:
+                #endregion
+                #region Polymorph
+                case "ref":
+                    displayText = "";
+                    polymorphUI.SetActive(false);
+                    getTarget();
+                    polyTemp = spellTarget.transform.lossyScale;
+                   
+                    if (spellTarget.GetComponent<Rigidbody>() != null && spellTarget != player)
+                    {
+                        displayText = "";
+                    }
+                    spellEffectsTimer = spellLongevity * 10;
+                    activeSpell = "POLYMORPH";
+                    break;
+                #endregion
+                default:
                     displayText = "";
                     break;
             }
@@ -603,6 +641,7 @@ public class SpellDisplay : MonoBehaviour
         lightUI.SetActive(false);
         identifyUI.SetActive(false);
         rainUI.SetActive(false);
+        polymorphUI.SetActive(false);
 
         displayText = "";
         spellTarget = player;

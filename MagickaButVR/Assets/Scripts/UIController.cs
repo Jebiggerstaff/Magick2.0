@@ -55,6 +55,7 @@ public class UIController : MonoBehaviour
     bool knowsLight = false;
     bool knowsIdentify = false;
     bool knowsRain = false;
+    bool knowsPolymorph = false;
     #endregion
 
     bool InOptionsMenu = false;
@@ -332,6 +333,17 @@ public class UIController : MonoBehaviour
                 {
                     knowsRain = true;
                     SpellSlots[spellsknown].GetComponent<Text>().text = "Rain Q-F-E";
+                    spellsknown++;
+                }
+
+                break;
+            #endregion
+            #region Polymorph
+            case "ref":
+                if (knowsPolymorph == false)
+                {
+                    knowsPolymorph = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Polymorph R-E-F";
                     spellsknown++;
                 }
 
