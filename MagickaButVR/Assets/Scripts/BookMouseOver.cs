@@ -75,6 +75,12 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellTitle.GetComponent<Text>().text = "Rain";
             SpellDesc.GetComponent<Text>().text = "Creates a cloud above, bathing the area in rain.";
         }
+        if (this.GetComponent<Text>().text == "Polymorph R-E-F")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Polymorph";
+            SpellDesc.GetComponent<Text>().text = "Grow or shrink an object.";
+        }
 
         #endregion
 
