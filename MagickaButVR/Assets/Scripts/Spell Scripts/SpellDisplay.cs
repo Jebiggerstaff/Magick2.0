@@ -31,6 +31,8 @@ public class SpellDisplay : MonoBehaviour
     public GameObject hasteUI;
     public GameObject telekinesisUI;
     public GameObject lightUI;
+    public GameObject identifyUI;
+    public GameObject rainUI;
 
     #endregion
 
@@ -315,7 +317,11 @@ public class SpellDisplay : MonoBehaviour
                 #endregion
                 #region Rain
                 case "qfe":
-                    Debug.Log("Make it rain");
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    if (activeSpell == null)
+                    {
+                        rainUI.SetActive(true);
+                    }
                     break;
 				#endregion
 				default:
@@ -470,7 +476,8 @@ public class SpellDisplay : MonoBehaviour
                 #endregion
                 #region Rain
                 case "qfe":
-                    Debug.Log("Raining");
+                    displayText = "";
+                    rainUI.SetActive(false);
                     Instantiate(Resources.Load("Rain Cloud"), player.transform.position + (Vector3.up * 50), player.transform.rotation);
                     break;
 				#endregion
@@ -594,6 +601,8 @@ public class SpellDisplay : MonoBehaviour
         hasteUI.SetActive(false);
         telekinesisUI.SetActive(false);
         lightUI.SetActive(false);
+        identifyUI.SetActive(false);
+        rainUI.SetActive(false);
 
         displayText = "";
         spellTarget = player;

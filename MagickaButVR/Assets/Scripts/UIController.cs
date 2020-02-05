@@ -54,6 +54,7 @@ public class UIController : MonoBehaviour
     bool knowsTelekinesis = false;
     bool knowsLight = false;
     bool knowsIdentify = false;
+    bool knowsRain = false;
     #endregion
 
     bool InOptionsMenu = false;
@@ -320,6 +321,17 @@ public class UIController : MonoBehaviour
                 {
                     knowsIdentify = true;
                     SpellSlots[spellsknown].GetComponent<Text>().text = "Identify E-R-F";
+                    spellsknown++;
+                }
+
+                break;
+            #endregion
+            #region Rain
+            case "qfe":
+                if (knowsRain == false)
+                {
+                    knowsRain = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Rain Q-F-E";
                     spellsknown++;
                 }
 

@@ -69,10 +69,17 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellTitle.GetComponent<Text>().text = "Identify";
             SpellDesc.GetComponent<Text>().text = "Reveals objects around the user that can be manipulated by magick.";
         }
-		#endregion
+        if (this.GetComponent<Text>().text == "Rain Q-F-E")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Rain";
+            SpellDesc.GetComponent<Text>().text = "Creates a cloud above, bathing the area in rain.";
+        }
 
-		# region Tasks Page
-		if (this.GetComponent<Text>().text == "Village Tasks")
+        #endregion
+
+        #region Tasks Page
+        if (this.GetComponent<Text>().text == "Village Tasks")
         {
             VillageTaskList.SetActive(true);
         }
