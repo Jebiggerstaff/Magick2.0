@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class SamBrain : MonoBehaviour
 {
 	public NavMeshAgent moveSam;
-	GameObject enemy;
+	public GameObject enemy;
     GameObject tmp = null;
 	RaycastHit hit;
 	Ray ray;
@@ -90,7 +90,7 @@ public class SamBrain : MonoBehaviour
 			Shank();
 	}
 
-	void DeAggro()
+	public void DeAggro()
 	{
 		enemy = tmp;
         enemy = null;

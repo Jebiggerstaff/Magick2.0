@@ -18,6 +18,7 @@ public class PersistentManager : MonoBehaviour
 
 	#region Task Flags & Check Boxes
 	//Village Set
+	[Header("Village Tasks")]
 	public bool firstSpell = false;
 	public bool SamMurdered = false;
 	public bool repairBridge = false;
@@ -25,6 +26,7 @@ public class PersistentManager : MonoBehaviour
 	public GameObject firstSpellCB;
 	public GameObject repairBridgeCB;
 	//Forest Set
+	[Header("Forest Tasks")]
 	public bool enteredForest = false;
 	public bool surviveAmbush = false;
 	public bool killedAllGoblins = false;
@@ -38,6 +40,7 @@ public class PersistentManager : MonoBehaviour
 	public GameObject escapeForestCB;
 	public GameObject burnVinesCB;
 	//Castle Set
+	[Header("Castle Tasks")]
 	public bool enteredCastle = false;
 	public bool gateOpened = false;
 	public bool RecoverCure = false;
@@ -45,13 +48,17 @@ public class PersistentManager : MonoBehaviour
 	public GameObject gateOpenedCB;
 	public GameObject RecoverCureCB;
 	//Cave Set
+	[Header("Cave Tasks")]
 	public bool enteredCave = false;
-	public bool killAllWolves = false;
+	public bool killedAllWolves = false;
+	public int totalWolves;
+	public int killedWolves;
 	public bool openPortcullis = false;
 	public GameObject enteredCaveCB;
 	public GameObject killAllWolvesCB;
 	public GameObject openPortcullisCB;
 	//Misc Set
+	[Header("Misc Tasks")]
 	public bool fullyExplored = false;
 	public GameObject fullyExploredCB;
 	#endregion
@@ -167,6 +174,15 @@ public class PersistentManager : MonoBehaviour
 			killedAllGoblins = true;
 			killedAllGoblinsCB.SetActive(true);
 			TaskComplete(true, "Defeated the goblin threat.");
+		}
+	}
+
+	public void WolfKilled(bool b)
+	{
+		killedWolves++;
+		if(killedWolves == totalWolves)
+		{
+			
 		}
 	}
 
