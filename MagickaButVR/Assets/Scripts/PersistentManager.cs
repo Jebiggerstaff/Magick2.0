@@ -102,8 +102,14 @@ public class PersistentManager : MonoBehaviour
 				enteredCaveCB.SetActive(true);
 				TaskComplete(true, "Cave discovered");
 			}
+			else if(!escapeForest && zone == "Overgrown Path")
+			{
+				escapeForest = true;
+				escapeForestCB.SetActive(true);
+				TaskComplete(true, "Forest Escaped!");
+			}
 
-			if (enteredForest && enteredCastle && enteredCave)
+			if (enteredForest && enteredCastle && enteredCave && escapeForest)
 			{
 				fullyExplored = true;
 				fullyExploredCB.SetActive(true);
