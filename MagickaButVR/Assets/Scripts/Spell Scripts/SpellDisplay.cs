@@ -8,6 +8,8 @@ public class SpellDisplay : MonoBehaviour
 {
     public GameObject fireball;
     public GameObject light;
+    public GameObject Crate;
+    public GameObject Boulder;
     public GameObject identifyGlow;
     public GameObject grease;
     public GameObject player;
@@ -17,7 +19,9 @@ public class SpellDisplay : MonoBehaviour
     public GameObject UI;
     public GameObject HasteScreenEffect;
     public GameObject JumpScreenEffect;
-    public GameObject spawnedLight = null;
+    private GameObject spawnedLight = null;
+    private GameObject spawnedCrate = null;
+    private GameObject spawnedBoulder = null;
 
     public float scale;
     public float identifyDistance;
@@ -34,6 +38,9 @@ public class SpellDisplay : MonoBehaviour
     public GameObject identifyUI;
     public GameObject rainUI;
     public GameObject polymorphUI;
+    public GameObject waterWalkingUI;
+    public GameObject ConjureCrateUI;
+    public GameObject ConjureBoulderUI;
 
     #endregion
 
@@ -54,6 +61,7 @@ public class SpellDisplay : MonoBehaviour
     Material mat = null;//Used for telekinesis to get material of spellTarget;
     GameObject[] identifytargets;
     Vector3 polyTemp;
+    public BoxCollider water;
 
     public AudioClip hasteSE;
     public AudioClip JumpSE;
@@ -312,7 +320,7 @@ public class SpellDisplay : MonoBehaviour
                     break;
                 #endregion
                 #region Light
-                case "frf":
+                case "qrf":
                     UI.GetComponent<UIController>().AddToSpellbook(displayText);
                     if (activeSpell == null)
                     {
@@ -345,6 +353,27 @@ public class SpellDisplay : MonoBehaviour
                     {
                         polymorphUI.SetActive(true);
                     }
+                    break;
+                #endregion
+                #region Water Walking
+                case "rqf":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    if (activeSpell == null)
+                    {
+                        waterWalkingUI.SetActive(true);
+                    }
+                    break;
+                #endregion
+                #region Conjure Crate
+                case "ffq":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    ConjureCrateUI.SetActive(true);
+                    break;
+                #endregion
+                #region Conjure Boulder
+                case "ffe":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    ConjureBoulderUI.SetActive(true);
                     break;
                 #endregion
                 default:
@@ -459,7 +488,7 @@ public class SpellDisplay : MonoBehaviour
                     break;
                 #endregion
                 #region Light
-                case "frf":
+                case "qrf":
                     if (activeSpell == null)
                     {
                         displayText = "";
@@ -478,6 +507,7 @@ public class SpellDisplay : MonoBehaviour
                         else
                              spawnedLight = Instantiate(light, spellGuide.transform.position, transform.rotation);
                     }
+                    activeSpell = "LIGHT";
                     break;
                 #endregion
                 #region Identify
@@ -502,6 +532,7 @@ public class SpellDisplay : MonoBehaviour
                     displayText = "";
                     rainUI.SetActive(false);
                     Instantiate(Resources.Load("Rain Cloud"), player.transform.position + (Vector3.up * 50), player.transform.rotation);
+                    activeSpell = "RAIN";
                     break;
                 #endregion
                 #region Polymorph
@@ -517,6 +548,60 @@ public class SpellDisplay : MonoBehaviour
                     }
                     spellEffectsTimer = spellLongevity * 10;
                     activeSpell = "POLYMORPH";
+                    break;
+                #endregion
+                #region Water Walking
+                case "rqf":
+                    Debug.Log("fuck");
+                    displayText = "";
+                    waterWalkingUI.SetActive(false);
+                    water.enabled = true;              
+                    break;
+                #endregion
+                #region Conjure Crate
+                case "ffq":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        ConjureCrateUI.SetActive(false);
+                        int layerMask = 0 << 8;
+                        layerMask = ~layerMask;
+                        RaycastHit hit;
+                        if (spawnedCrate != null)
+                        {
+                            Destroy(spawnedCrate);
+                        }
+                        if (Physics.Raycast(new Ray(playerCamera.transform.position, playerCamera.transform.forward), out hit, 9.9f, layerMask))
+                        {
+                            spawnedCrate= Instantiate(Crate, hit.point, transform.rotation);
+                        }
+                        else
+                            spawnedCrate = Instantiate(Crate, spellGuide.transform.position, transform.rotation);
+                    }
+                    activeSpell = "CONJURECRATE";
+                    break;
+                #endregion
+                #region Conjure Boulder
+                case "ffe":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        ConjureBoulderUI.SetActive(false);
+                        int layerMask = 0 << 8;
+                        layerMask = ~layerMask;
+                        RaycastHit hit;
+                        if (spawnedBoulder != null)
+                        {
+                            Destroy(spawnedBoulder);
+                        }
+                        if (Physics.Raycast(new Ray(playerCamera.transform.position, playerCamera.transform.forward), out hit, 9.9f, layerMask))
+                        {
+                            spawnedBoulder = Instantiate(Boulder, hit.point, transform.rotation);
+                        }
+                        else
+                            spawnedBoulder = Instantiate(Boulder, spellGuide.transform.position, transform.rotation);
+                    }
+
                     break;
                 #endregion
                 default:
@@ -642,6 +727,11 @@ public class SpellDisplay : MonoBehaviour
         identifyUI.SetActive(false);
         rainUI.SetActive(false);
         polymorphUI.SetActive(false);
+        waterWalkingUI.SetActive(false);
+        ConjureBoulderUI.SetActive(false);
+        ConjureCrateUI.SetActive(false);
+
+        water.enabled = false;
 
         displayText = "";
         spellTarget = player;

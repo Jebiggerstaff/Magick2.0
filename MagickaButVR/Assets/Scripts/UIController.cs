@@ -56,6 +56,10 @@ public class UIController : MonoBehaviour
     bool knowsIdentify = false;
     bool knowsRain = false;
     bool knowsPolymorph = false;
+    bool knowsWaterWalking = false;
+    bool knowsConjureCrate = false;
+    bool knowsConjureBoulder = false;
+
     #endregion
 
     bool InOptionsMenu = false;
@@ -306,7 +310,7 @@ public class UIController : MonoBehaviour
                 break;
             #endregion
             #region Light
-            case "frf":
+            case "qrf":
                 if (knowsLight == false)
                 {
                     knowsLight = true;
@@ -349,6 +353,40 @@ public class UIController : MonoBehaviour
 
                 break;
             #endregion
+            #region Water Walking
+            case "rqf":
+                if (knowsWaterWalking == false)
+                {
+                    knowsWaterWalking = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Water Walking R-Q-F";
+                    spellsknown++;
+                }
+
+                break;
+            #endregion
+            #region Conjure Crate
+            case "ffq":
+                if (knowsConjureCrate == false)
+                {
+                    knowsConjureCrate = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Conjure: Crate F-F-Q";
+                    spellsknown++;
+                }
+
+                break;
+            #endregion
+            #region Conjure Boulder
+            case "ffe":
+                if (knowsConjureBoulder == false)
+                {
+                    knowsConjureBoulder = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Conjure: Boulder F-F-E";
+                    spellsknown++;
+                }
+
+                break;
+            #endregion
+
 
             default:
                 break;

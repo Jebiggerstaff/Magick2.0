@@ -57,7 +57,7 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellTitle.GetComponent<Text>().text = "Telekinesis";
             SpellDesc.GetComponent<Text>().text = "Allows the user to lift and manipulate an object.";
         }
-        if (this.GetComponent<Text>().text == "Light F-R-F")
+        if (this.GetComponent<Text>().text == "Light Q-R-F")
         {
             SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
             SpellTitle.GetComponent<Text>().text = "Light";
@@ -80,6 +80,24 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
             SpellTitle.GetComponent<Text>().text = "Polymorph";
             SpellDesc.GetComponent<Text>().text = "Grow or shrink an object.";
+        }
+        if (this.GetComponent<Text>().text == "Water Walking R-Q-F")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Water Walking";
+            SpellDesc.GetComponent<Text>().text = "Place a layer of magic between you and the water allowing you to stand on the surface.";
+        }
+        if (this.GetComponent<Text>().text == "Conjure: Crate F-F-Q")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Conjure: Crate";
+            SpellDesc.GetComponent<Text>().text = "Conjure a crate into existance and hold it into existance using magick.";
+        }
+        if (this.GetComponent<Text>().text == "Conjure: Boulder F-F-E")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Conjure: Boulder";
+            SpellDesc.GetComponent<Text>().text = "Conjure a boulder into existance and hold it into existance using magick.";
         }
 
         #endregion
