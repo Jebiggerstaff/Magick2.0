@@ -99,7 +99,30 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellTitle.GetComponent<Text>().text = "Conjure: Boulder";
             SpellDesc.GetComponent<Text>().text = "Conjure a boulder into existance and hold it into existance using magick.";
         }
-
+        if (this.GetComponent<Text>().text == "Teleport: Town F-Q-Q")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Teleport: Town";
+            SpellDesc.GetComponent<Text>().text = "Recall a location that you've been before and Teleport there.";
+        }
+        if (this.GetComponent<Text>().text == "Teleport: Forest F-Q-E")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Teleport: Forest";
+            SpellDesc.GetComponent<Text>().text = "Recall a location that you've been before and Teleport there.";
+        }
+        if (this.GetComponent<Text>().text == "Teleport: Cave F-Q-R")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Teleport: Cave";
+            SpellDesc.GetComponent<Text>().text = "Recall a location that you've been before and Teleport there.";
+        }
+        if (this.GetComponent<Text>().text == "Teleport: Castle F-Q-F")
+        {
+            SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            SpellTitle.GetComponent<Text>().text = "Teleport: Castle";
+            SpellDesc.GetComponent<Text>().text = "Recall a location that you've been before and Teleport there.";
+        }
         #endregion
 
         #region Tasks Page

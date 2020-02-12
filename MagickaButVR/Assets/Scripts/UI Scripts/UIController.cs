@@ -59,6 +59,10 @@ public class UIController : MonoBehaviour
     bool knowsWaterWalking = false;
     bool knowsConjureCrate = false;
     bool knowsConjureBoulder = false;
+    bool knowsTeleportTown = false;
+    bool knowsTeleportForest = false;
+    bool knowsTeleportCastle = false;
+    bool knowsTeleportCave = false;
 
     #endregion
 
@@ -386,8 +390,46 @@ public class UIController : MonoBehaviour
 
                 break;
             #endregion
-
-
+            #region Teleport Town
+            case "fqq":
+                if (knowsTeleportTown == false)
+                {
+                    knowsTeleportTown = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Teleport: Town F-Q-Q";
+                    spellsknown++;
+                }
+                break;
+            #endregion
+            #region Teleport Forest
+            case "fqe":
+                if (knowsTeleportForest == false)
+                {
+                    knowsTeleportForest = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Teleport: Forest F-Q-E";
+                    spellsknown++;
+                }
+                break;
+            #endregion
+            #region Teleport Castle
+            case "fqr":
+                if (knowsTeleportCastle == false)
+                {
+                    knowsTeleportCastle = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Teleport: Castle F-Q-R";
+                    spellsknown++;
+                }
+                break;
+            #endregion
+            #region Teleport Cave
+            case "fqf":
+                if (knowsTeleportCave == false)
+                {
+                    knowsTeleportCave = true;
+                    SpellSlots[spellsknown].GetComponent<Text>().text = "Teleport: Cave F-Q-F";
+                    spellsknown++;
+                }
+                break;
+            #endregion
             default:
                 break;
         }

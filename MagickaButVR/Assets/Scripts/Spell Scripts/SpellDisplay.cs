@@ -41,6 +41,10 @@ public class SpellDisplay : MonoBehaviour
     public GameObject waterWalkingUI;
     public GameObject ConjureCrateUI;
     public GameObject ConjureBoulderUI;
+    public GameObject TeleportTownUI;
+    public GameObject TeleportForestUI;
+    public GameObject TeleportCastleUI;
+    public GameObject TeleportCaveUI;
 
     #endregion
 
@@ -67,6 +71,10 @@ public class SpellDisplay : MonoBehaviour
     public AudioClip JumpSE;
     public AudioClip IdentifySE;
 
+    public GameObject TownTP;
+    public GameObject ForestTP;
+    public GameObject CastleTP;
+    public GameObject CaveTP;
 
     //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
 
@@ -376,6 +384,39 @@ public class SpellDisplay : MonoBehaviour
                     ConjureBoulderUI.SetActive(true);
                     break;
                 #endregion
+                #region Teleport Town
+                case "fqq":
+                    UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                    TeleportTownUI.SetActive(true);
+                    break;
+                #endregion
+                #region Teleport Forest
+                case "fqe":
+                    if (PersistentManager.instance.enteredForest == true)
+                    {
+                        UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                        TeleportForestUI.SetActive(true);
+                    }
+                    break;
+                #endregion
+                #region Teleport Castle
+                case "fqr":
+                    if (PersistentManager.instance.enteredCastle == true)
+                    {
+                        UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                        TeleportCastleUI.SetActive(true);
+                    }
+                    break;
+                #endregion
+                #region Teleport Cave
+                case "fqf":
+                    if (PersistentManager.instance.enteredCave == true)
+                    {
+                        UI.GetComponent<UIController>().AddToSpellbook(displayText);
+                        TeleportCaveUI.SetActive(true);
+                    }
+                    break;
+                #endregion
                 default:
                     break;
             }
@@ -604,6 +645,50 @@ public class SpellDisplay : MonoBehaviour
 
                     break;
                 #endregion
+                #region Teleport Town
+                case "fqq":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        TeleportTownUI.SetActive(false);
+                        player.transform.position = TownTP.transform.position;
+                    }
+                    break;
+                #endregion
+                #region Teleport Forest
+                case "fqe":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        TeleportForestUI.SetActive(false);
+
+                        if (PersistentManager.instance.enteredForest==true)
+                            player.transform.position = ForestTP.transform.position;
+                    }
+                    break;
+                #endregion
+                #region Teleport Castle
+                case "fqr":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        TeleportCastleUI.SetActive(false);
+                        if (PersistentManager.instance.enteredCastle == true)
+                            player.transform.position = CastleTP.transform.position;
+                    }
+                    break;
+                #endregion
+                #region Teleport Cave
+                case "fqf":
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        TeleportCaveUI.SetActive(false);
+                        if (PersistentManager.instance.enteredCave == true)
+                            player.transform.position = CaveTP.transform.position;
+                    }
+                    break;
+                #endregion
                 default:
                     displayText = "";
                     break;
@@ -730,6 +815,10 @@ public class SpellDisplay : MonoBehaviour
         waterWalkingUI.SetActive(false);
         ConjureBoulderUI.SetActive(false);
         ConjureCrateUI.SetActive(false);
+        TeleportCaveUI.SetActive(false);
+        TeleportTownUI.SetActive(false);
+        TeleportForestUI.SetActive(false);
+        TeleportCastleUI.SetActive(false);
 
         water.enabled = false;
 
