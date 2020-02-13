@@ -18,16 +18,10 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
     public GameObject MountainTaskList;
     public GameObject MiscTaskList;
 
-    public GameObject HowToCastSpells;
-    public GameObject HowToCastSpellsDesc;
-    public GameObject SpellTable;
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(this.GetComponent<Text>().text!="")
-            DisableTutorialUI();
-        #region Spell Page
-        if (this.GetComponent<Text>().text == "Fireball Q-E-E")
+		# region Spell Page
+		if (this.GetComponent<Text>().text == "Fireball Q-E-E")
         {
             SpellIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
             SpellTitle.GetComponent<Text>().text = "Fireball";
@@ -207,31 +201,18 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         #endregion
     }
 
-    void DisableTutorialUI()
-    {
-        HowToCastSpells.SetActive(false);
-        HowToCastSpellsDesc.SetActive(false);
-        SpellTable.SetActive(false);
-    }
-
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (this.GetComponent<Text>().text != "")
-        {
-            SpellDesc.GetComponent<Text>().text = "";
-            SpellTitle.GetComponent<Text>().text = "";
-            SpellIcon.GetComponent<Image>().sprite = null;
-            CodexData.GetComponent<Text>().text = "";
-            CodexTitle.GetComponent<Text>().text = "";
-            CodexIcon.GetComponent<Image>().sprite = null;
-            VillageTaskList.SetActive(false);
-            ForestTaskList.SetActive(false);
-            CastleTaskList.SetActive(false);
-            MountainTaskList.SetActive(false);
-            MiscTaskList.SetActive(false);
-            HowToCastSpells.SetActive(true);
-            HowToCastSpellsDesc.SetActive(true);
-            SpellTable.SetActive(true);
-        }
+        SpellDesc.GetComponent<Text>().text = "";
+        SpellTitle.GetComponent<Text>().text = "";
+        SpellIcon.GetComponent<Image>().sprite = null;
+        CodexData.GetComponent<Text>().text = "";
+        CodexTitle.GetComponent<Text>().text = "";
+        CodexIcon.GetComponent<Image>().sprite = null;
+        VillageTaskList.SetActive(false);
+        ForestTaskList.SetActive(false);
+        CastleTaskList.SetActive(false);
+        MountainTaskList.SetActive(false);
+        MiscTaskList.SetActive(false);
     }
 }

@@ -19,11 +19,7 @@ public class VineWall : MonoBehaviour
             VineWallOpen1.SetActive(true);
             VineWallOpen2.SetActive(true);
 
-            PersistentManager.instance.burnVines = true;
-            PersistentManager.instance.burnVinesCB.SetActive(true);
-            PersistentManager.instance.TaskComplete(true, "The vines have been cleared from the path.");
-
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
