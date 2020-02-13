@@ -19,9 +19,11 @@ public class SpellDisplay : MonoBehaviour
     public GameObject UI;
     public GameObject HasteScreenEffect;
     public GameObject JumpScreenEffect;
+    public GameObject RainCloud;
     private GameObject spawnedLight = null;
     private GameObject spawnedCrate = null;
     private GameObject spawnedBoulder = null;
+    private GameObject spawnedRain = null;
 
     public float scale;
     public float identifyDistance;
@@ -66,6 +68,7 @@ public class SpellDisplay : MonoBehaviour
     GameObject[] identifytargets;
     Vector3 polyTemp;
     public BoxCollider water;
+    
 
     public AudioClip hasteSE;
     public AudioClip JumpSE;
@@ -570,9 +573,18 @@ public class SpellDisplay : MonoBehaviour
                 #endregion
                 #region Rain
                 case "qfe":
-                    displayText = "";
-                    rainUI.SetActive(false);
-                    Instantiate(Resources.Load("Rain Cloud"), player.transform.position + (Vector3.up * 50), player.transform.rotation);
+                    if (activeSpell == null)
+                    {
+                        displayText = "";
+                        rainUI.SetActive(false);
+                        if (spawnedRain != null)
+                        {
+                            Destroy(spawnedRain);
+                            spawnedRain = Instantiate(RainCloud, player.transform.position + (Vector3.up * 50), player.transform.rotation);
+                        }
+                        else
+                            spawnedRain = Instantiate(RainCloud, player.transform.position + (Vector3.up * 50), player.transform.rotation);
+                    }
                     activeSpell = "RAIN";
                     break;
                 #endregion
