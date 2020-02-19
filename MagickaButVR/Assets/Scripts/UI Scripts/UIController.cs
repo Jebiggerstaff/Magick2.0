@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.XR;
 using System;
 
+
 public class UIController : MonoBehaviour
 {
     #region Gameobjects
@@ -77,32 +78,29 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
+            XRSettings.enabled = false;
 
-        XRSettings.enabled = false;
-
-        MainToGameButton.onClick.AddListener(MainToGame);
-        MainToOptionsButton.onClick.AddListener(MainToOptions);
-        MainToDesktopButton.onClick.AddListener(ToDesktop);
-        OptionsToMainButton.onClick.AddListener(OptionsToMain);
-        PauseToGameButton.onClick.AddListener(PauseToGame);
-        PauseToOptionsButton.onClick.AddListener(PauseToOptions);
-        PauseToCreditsButton.onClick.AddListener(PauseToCredits);
-        PauseToMainButton.onClick.AddListener(PauseToMain);
-        SpellsToTasksButton.onClick.AddListener(SpellsToTasks);
-        SpellsToCodexButton.onClick.AddListener(SpellsToCodex);
-        TasksToSpellsButton.onClick.AddListener(TasksToSpells);
-        CodexToSpellsButton.onClick.AddListener(CodexToSpells);
-
-        //SpellSlots = GameObject.FindGameObjectsWithTag("SpellSlot");
-        SpellbookUI.SetActive(false);
-
+            MainToGameButton.onClick.AddListener(MainToGame);
+            MainToOptionsButton.onClick.AddListener(MainToOptions);
+            MainToDesktopButton.onClick.AddListener(ToDesktop);
+            OptionsToMainButton.onClick.AddListener(OptionsToMain);
+            PauseToGameButton.onClick.AddListener(PauseToGame);
+            PauseToOptionsButton.onClick.AddListener(PauseToOptions);
+            PauseToCreditsButton.onClick.AddListener(PauseToCredits);
+            PauseToMainButton.onClick.AddListener(PauseToMain);
+            SpellsToTasksButton.onClick.AddListener(SpellsToTasks);
+            SpellsToCodexButton.onClick.AddListener(SpellsToCodex);
+            TasksToSpellsButton.onClick.AddListener(TasksToSpells);
+            CodexToSpellsButton.onClick.AddListener(CodexToSpells);
 
         if (VRmode == true)
         {
             MainMenuGroup.SetActive(false);
             XRSettings.enabled = true;
         }
-
+        
+        //SpellSlots = GameObject.FindGameObjectsWithTag("SpellSlot");
+        SpellbookUI.SetActive(false);
     }
      
     private void Update()

@@ -8,8 +8,6 @@ public class PlayerCollision : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        
-
         spellTarget = spellCall.GetComponent<SpellDisplay>().spellTarget.GetComponent<Collider>();
 
         if (other == spellTarget)
