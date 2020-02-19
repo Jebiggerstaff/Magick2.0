@@ -19,12 +19,16 @@ public class CastMagic : MonoBehaviour
     public GameObject spellTarget;
     public GameObject player;
     public GameObject spellGuide;
+
+    public GameObject HasteScreenEffect;
+    public GameObject JumpScreenEffect;
     
     public float spellTimer;
     private float targetDistance;
 
+    #region CastingBooleans
     private bool playerTouching;
-    private bool CastingFireball = false;
+    public bool CastingFireball = false;
     private bool CastingTelekinesis = false;
     private bool OngoingTelekinesis = false;
     private bool CastingJump = false;
@@ -32,7 +36,29 @@ public class CastMagic : MonoBehaviour
     private bool CastingHaste = false;
     private bool OngoingHaste = false;
     private bool CastingGreasePool = false;
-    
+    #endregion
+
+    #region UISpellGameobjects
+
+    public GameObject fireballUI;
+    public GameObject greaseUI;
+    public GameObject jumpUI;
+    public GameObject levitationUI;
+    public GameObject hasteUI;
+    public GameObject telekinesisUI;
+    public GameObject lightUI;
+    public GameObject identifyUI;
+    public GameObject rainUI;
+    public GameObject polymorphUI;
+    public GameObject waterWalkingUI;
+    public GameObject ConjureCrateUI;
+    public GameObject ConjureBoulderUI;
+    public GameObject TeleportTownUI;
+    public GameObject TeleportForestUI;
+    public GameObject TeleportCastleUI;
+    public GameObject TeleportCaveUI;
+
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -66,24 +92,30 @@ public class CastMagic : MonoBehaviour
                 
             }//Starts Telekinesis
             else if (CastingJump == true)
-            {       
+            {
+                JumpScreenEffect.SetActive(true);
+                jumpUI.SetActive(false);
                 spellTimer = 30;
                 OngoingJump = true;
                 CastingJump = false;
             }//Starts Jump
             else if (spellTimer > 0 && OngoingJump == true)
             {
+                JumpScreenEffect.SetActive(false);
                 OngoingJump = false;
                 DisplayMagicUI.Channeling = false;
             }//Stops Jump
             else if (CastingHaste == true)
             {
+                HasteScreenEffect.SetActive(true);
+                hasteUI.SetActive(false);
                 spellTimer = 30;
                 OngoingHaste = true;
                 CastingHaste = false;
             }//Starts Haste
             else if (spellTimer > 0 && OngoingHaste == true)
             {
+                HasteScreenEffect.SetActive(false);
                 OngoingHaste = false;
                 DisplayMagicUI.Channeling = false;
                 pc.Acceleration = .08f;
@@ -97,6 +129,7 @@ public class CastMagic : MonoBehaviour
             pc.JumpForce = .6f;
         else if(spellTimer < 0 && OngoingJump == true)
         {
+            JumpScreenEffect.SetActive(false);
             pc.JumpForce = .3f;
             DisplayMagicUI.Channeling = false;
             OngoingJump = false;
@@ -107,6 +140,7 @@ public class CastMagic : MonoBehaviour
             pc.Acceleration = .3f;
         else if (spellTimer < 0 && OngoingHaste == true)
         {
+            HasteScreenEffect.SetActive(false);
             pc.Acceleration = .08f;
             DisplayMagicUI.Channeling = false;
             OngoingHaste = false;
@@ -154,9 +188,10 @@ public class CastMagic : MonoBehaviour
         
         if (Combination[0] == "Evocation" && Combination[1] == "Stranger" && Combination[2] == "Primal")
         {
-            if (DisplayMagicUI.RightHand.transform.childCount == 1)
+            if (DisplayMagicUI.RightHand.transform.childCount == 2)
             {
                 DisplayMagicUI.Channeling = true;
+                fireballUI.SetActive(true);
                 Spell = Instantiate(FireballGameObject, DisplayMagicUI.RightHand.transform);
                 CastingFireball = true;
                 Debug.LogWarning("Cast Fireball");
@@ -166,9 +201,10 @@ public class CastMagic : MonoBehaviour
 
         if (Combination[0] == "Evocation" && Combination[1] == "Area" && Combination[2] == "Primal")
         {
-            if (DisplayMagicUI.RightHand.transform.childCount == 1)
+            if (DisplayMagicUI.RightHand.transform.childCount == 2)
             {
                 DisplayMagicUI.Channeling = true;
+                greaseUI.SetActive(true);
                 Spell = Instantiate(GreasePoolGameObject, DisplayMagicUI.RightHand.transform);
                 DisplayMagicUI.RightHand.transform.GetChild(1).GetComponent<SphereCollider>().isTrigger = false;
                 CastingGreasePool = true;
@@ -180,6 +216,7 @@ public class CastMagic : MonoBehaviour
         if (Combination[0] == "Transmutation" && Combination[1] == "Stranger" && Combination[2] == "Gravitation")
         {
             DisplayMagicUI.Channeling = true;
+            telekinesisUI.SetActive(true);
             CastingTelekinesis = true;
             Debug.LogWarning("Cast Telekinesis");
         }//Telekinesis
@@ -187,6 +224,7 @@ public class CastMagic : MonoBehaviour
         if (Combination[0] == "Enchantment" && Combination[1] == "Self" && Combination[2] == "Gravitation")
         {
             DisplayMagicUI.Channeling = true;
+            jumpUI.SetActive(true);
             CastingJump = true;
             Debug.LogWarning("Cast Jump");
         }//Jump
@@ -195,6 +233,7 @@ public class CastMagic : MonoBehaviour
         {
             DisplayMagicUI.Channeling = true;
             CastingHaste = true;
+            hasteUI.SetActive(true);
             Debug.LogWarning("Cast Haste");
         }//Haste
 
@@ -207,6 +246,7 @@ public class CastMagic : MonoBehaviour
         Spell.transform.parent = null;
         Spell.GetComponent<Rigidbody>().useGravity = true;
         Spell.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+        fireballUI.SetActive(false);
         CastingFireball = false;
     }//Code for launching Fireball
 
@@ -215,13 +255,14 @@ public class CastMagic : MonoBehaviour
         DisplayMagicUI.RightHand.transform.GetChild(1).GetComponent<SphereCollider>().isTrigger = true;
         Spell.transform.parent = null;
         Spell.GetComponent<Rigidbody>().useGravity = true;
-        Spell.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);       
+        Spell.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+        fireballUI.SetActive(false);
         CastingGreasePool = false;
     }
 
     public void Telekinesis()
     {
-
+        telekinesisUI.SetActive(false);
         GetTarget();
         //Determines if object is allowed to be targeted
         if (spellTarget != null)
@@ -256,13 +297,5 @@ public class CastMagic : MonoBehaviour
         }
         else
             Debug.LogWarning("No Target Hit");
-        /*
-        if (spellTarget != null && spellTarget.GetComponent<Rigidbody>() != null)
-            Debug.LogWarning("Target: " + spellTarget.name);
-        else if (spellTarget != null)
-            Debug.LogWarning(spellTarget.name + " cannot be targeted");
-        else
-            Debug.LogWarning("No Target | " + ray.GetPoint(10f) + " | " + Righthand.transform.position);
-            */
     }//Code for Raycasting to Target
 }
