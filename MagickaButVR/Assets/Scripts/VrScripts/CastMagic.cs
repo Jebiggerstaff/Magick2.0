@@ -28,7 +28,7 @@ public class CastMagic : MonoBehaviour
 
     #region CastingBooleans
     private bool playerTouching;
-    public bool CastingFireball = false;
+    private bool CastingFireball = false;
     private bool CastingTelekinesis = false;
     private bool OngoingTelekinesis = false;
     private bool CastingJump = false;

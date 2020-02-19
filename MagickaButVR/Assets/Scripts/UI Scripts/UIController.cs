@@ -73,7 +73,6 @@ public class UIController : MonoBehaviour
     public AudioClip PageTurn;
     public AudioClip BookOpen;
 
-
     void Start()
     {
 
@@ -99,7 +98,6 @@ public class UIController : MonoBehaviour
         if (VRmode == true)
         {
             MainMenuGroup.SetActive(false);
-            VRGroup.SetActive(true);
             XRSettings.enabled = true;
         }
 
