@@ -23,9 +23,9 @@ public class UIController : MonoBehaviour
     public GameObject TasksPage;
     #endregion
 
-    private GameObject[] SpellSlots;
-
     public int spellsknown=0;
+
+    public GameObject[] SpellSlots;
 
     #region Buttons
     public Button MainToGameButton;
@@ -73,6 +73,8 @@ public class UIController : MonoBehaviour
     public AudioClip PageTurn;
     public AudioClip BookOpen;
 
+
+
     void Start()
     {
 
@@ -91,7 +93,7 @@ public class UIController : MonoBehaviour
         TasksToSpellsButton.onClick.AddListener(TasksToSpells);
         CodexToSpellsButton.onClick.AddListener(CodexToSpells);
 
-        SpellSlots = GameObject.FindGameObjectsWithTag("SpellSlot");
+        //SpellSlots = GameObject.FindGameObjectsWithTag("SpellSlot");
         SpellbookUI.SetActive(false);
 
 
@@ -202,9 +204,7 @@ public class UIController : MonoBehaviour
 
     void PauseToMain()
     {
-        PauseMenu.SetActive(false);
-		PersistentManager.instance.ResetTasks();
-        SceneManager.LoadScene("New Scene");
+        SceneManager.LoadScene(2);
     }
 
     void ToDesktop()

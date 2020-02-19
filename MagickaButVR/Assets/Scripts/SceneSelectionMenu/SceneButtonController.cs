@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class SceneButtonController : MonoBehaviour
 {
 
-    Button VRGameButton;
-    Button MainGameButton;
+    public Button VRGameButton;
+    public Button MainGameButton;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +23,10 @@ public class SceneButtonController : MonoBehaviour
 
     void VRGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
     void MainGame()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 }
