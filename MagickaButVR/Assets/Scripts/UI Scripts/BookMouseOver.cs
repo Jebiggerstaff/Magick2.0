@@ -203,6 +203,55 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             CodexTitle.GetComponent<Text>().text = "Goblins";
             CodexData.GetComponent<Text>().text = "Goblins are a race of small humanoid creatures with green skin who live in tribes across Seidrsund. Goblins are a hunter gatherer society, who survive on raiding settlements around them and passing caravans. Despite their tendency to raid and attack, Goblins are klutzy and rather odd looking. Despite this, they remain dangerous to the unprepared and new wizarding apprentices of the world. Goblins are Nomadic, and tribes rarely stay in the same spot for more than a few months at a time.";
         }
+        if (this.GetComponent<Text>().text == "Isle of Bahhl")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Isle of Bahhl";
+            CodexData.GetComponent<Text>().text = "The island in the Bay of Bahhl is known as The Isle of Bahhl. It is said to hold a secret unknown to simple mortals. It is rumored to be many things: A tunnel, a Portal to another Realm, Buried Treasure. Many have went in search, none have been successful.";
+        }
+        if (this.GetComponent<Text>().text == "Spellbooks")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Spellbooks";
+            CodexData.GetComponent<Text>().text = "The spell book is a possession that all students and masters of Magick keeps with them at all times. A magical object in itself, each book is intrinsically linked to its owner, and can be created once more from any blank book, and will contain all former contents before loss or destruction. The magical link between owner and book allows spells cast by the owner to magically be written into the book, including instructions on how to recast them, and their function.";
+        }
+        if (this.GetComponent<Text>().text == "Master's Cure")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Master's Cure";
+            CodexData.GetComponent<Text>().text = "This glowing bottle of liquid gives off a light purple hue, indicative of healing magic, and by how brightly it glows, extremely powerful healing magic. But something about it gives you the chills: It is cold to the touch. Healing potions are always warm, like freshly brewed tea. You get the feeling that this was created through unclean means. Perhaps, some sort of purification is possible using the power of the tree?";
+        }
+        if (this.GetComponent<Text>().text == "Mount Soh'ckur")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Mount Soh'ckur";
+            CodexData.GetComponent<Text>().text = "The imposing Mt. Soh’ckur towers above both the town of Whiffleburg. A naturally formed cave has allowed denizens seeking gems and mining work to explore and create a living in the cavernous inside of the mountain. It is said in myth that the mountain was raised long ago on the founding of the town by a great wizard, in order to attract more villagers to settle in the area, though this is unconfirmed. Recently, howling can be heard echoing out of the cave system, and villagers have chosen to avoid the area until a stop is put to it.";
+        }
+        if (this.GetComponent<Text>().text == "Castle Bahhl")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Castle Bahhl";
+            CodexData.GetComponent<Text>().text = "The Bahhl's Court is the name for the castle which houses the administrative center of the County. At his court, the Count entertains guests and sees matters of state and governance. No locals, aside from guardsmen who live at the castle, have ever seen the interior.";
+        }
+        if (this.GetComponent<Text>().text == "Whiffleburg")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Whiffleburg";
+            CodexData.GetComponent<Text>().text = "Whiffleburg, and town in the county of Bahhl, is the town that Wilfred has traveled to in order to find a cure for the illness his master has been afflicted by. Though a small town, it is known for inventing a sport in which players hit balls with sticks, and run around a diamond before being tagged with the ball. It is rumored the Count practices powerful magicks in secret, harnessing the great tree in the center of the town to cast his spells. The potential for powerful potions and miraculous items may be limitless, and Wilfred has to try.";
+        }
+        if (this.GetComponent<Text>().text == "Count of Bahhl")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "Count of Bahhl";
+            CodexData.GetComponent<Text>().text = "The Count of Bahhl, Baskuit Bahhl has been long rumored to be a powerful wizard, harnessing the ancient magic tree. It is said that he keeps his magic practice a secret due to his tendency to experiment with new and untested spells and potions, which is exactly why Wilfred was drawn to him. Initial messages have fallen on deaf ears, and Wilfred has been unsuccessful in contacting him. Perhaps paying him a visit will pay off?";
+        }
+        if (this.GetComponent<Text>().text == "The Forest")
+        {
+            CodexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Placeholder");
+            CodexTitle.GetComponent<Text>().text = "The Forest";
+            CodexData.GetComponent<Text>().text = "The small forest adjacent to the town of Whiffleburg is a relatively quiet and peaceful place. A few different paths live between the thick trees, allowing for travel to and from the castle on the cliffs above. Recently, however, a tribe of goblins have entered the forest, setting up camp, and terrorizing the town. With the recent disappearance of the Count and his men, none have been able to drive off the Goblin threat, until the arrival of Wilfred.";
+        }
+
 
         #endregion
     }
