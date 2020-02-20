@@ -64,7 +64,7 @@ public class UIController : MonoBehaviour
     bool knowsTeleportForest = false;
     bool knowsTeleportCastle = false;
     bool knowsTeleportCave = false;
-
+    bool knowsFlipWorld = false;
     #endregion
 
     bool InOptionsMenu = false;
@@ -426,6 +426,7 @@ public class UIController : MonoBehaviour
                 }
                 break;
             #endregion
+           
             default:
                 break;
         }

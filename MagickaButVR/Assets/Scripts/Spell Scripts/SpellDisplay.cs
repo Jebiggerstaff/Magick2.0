@@ -47,6 +47,7 @@ public class SpellDisplay : MonoBehaviour
     public GameObject TeleportForestUI;
     public GameObject TeleportCastleUI;
     public GameObject TeleportCaveUI;
+    public GameObject FlipWorldUI;
 
     #endregion
 
@@ -67,8 +68,7 @@ public class SpellDisplay : MonoBehaviour
     Material mat = null;//Used for telekinesis to get material of spellTarget;
     GameObject[] identifytargets;
     Vector3 polyTemp;
-    public BoxCollider water;
-    
+    public BoxCollider water;    
 
     public AudioClip hasteSE;
     public AudioClip JumpSE;
@@ -605,7 +605,6 @@ public class SpellDisplay : MonoBehaviour
                 #endregion
                 #region Water Walking
                 case "rqf":
-                    Debug.Log("fuck");
                     displayText = "";
                     waterWalkingUI.SetActive(false);
                     water.enabled = true;              

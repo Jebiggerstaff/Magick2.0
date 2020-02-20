@@ -129,6 +129,7 @@ public class BookMouseOver : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             SpellTitle.GetComponent<Text>().text = "Teleport: Castle";
             SpellDesc.GetComponent<Text>().text = "Recall a location that you've been before and Teleport there.";
         }
+        
         #endregion
 
         #region Tasks Page
