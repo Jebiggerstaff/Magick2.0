@@ -39,8 +39,11 @@ public class Ambush : MonoBehaviour
     {
         if(obj.tag == "Player")
         {
-            for(int i = 0; i < goblinsToSpawn; i++)
+            for (int i = 0; i < goblinsToSpawn; i++)
+            {
                 goblins[i] = (GameObject)Instantiate(Resources.Load("Sam"), aims[i].transform);
+                goblins[i].GetComponent<SamBrain>().enemy = GameObject.FindGameObjectWithTag("Player");
+            }
             PersistentManager.instance.totalGoblins += goblinsToSpawn;
             ambushStart = true;
         }
