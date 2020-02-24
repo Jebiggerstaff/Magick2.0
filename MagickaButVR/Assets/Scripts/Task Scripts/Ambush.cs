@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Ambush : MonoBehaviour
 {
+    public GameObject[] aims;
     public GameObject[] goblins;
+    public int goblinsToSpawn;
     public int deadGoblins;
     public bool ambushStart = false;
     public bool ambushFinished = false;
@@ -20,7 +22,7 @@ public class Ambush : MonoBehaviour
         {
             if(PersistentManager.instance.GetZone() != "Forest")
             {
-                for(int i = 0; i < goblins.Length - 1; i++)
+                for(int i = 0; i < goblinsToSpawn; i++)
                 {
                     goblins[i].GetComponent<SamBrain>().DeAggro();
                 }
@@ -37,24 +39,21 @@ public class Ambush : MonoBehaviour
     {
         if(obj.tag == "Player")
         {
-            goblins[0] = (GameObject)Instantiate(Resources.Load("Sam"), new Vector3(), new Quaternion());
-            goblins[1] = (GameObject)Instantiate(Resources.Load("Sam"), new Vector3(), new Quaternion());
-            goblins[2] = (GameObject)Instantiate(Resources.Load("Sam"), new Vector3(), new Quaternion());
-            goblins[3] = (GameObject)Instantiate(Resources.Load("Sam"), new Vector3(), new Quaternion());
-            goblins[4] = (GameObject)Instantiate(Resources.Load("Sam"), new Vector3(), new Quaternion());
-            PersistentManager.instance.totalGoblins += 5;
+            for(int i = 0; i < goblinsToSpawn; i++)
+                goblins[i] = (GameObject)Instantiate(Resources.Load("Sam"), aims[i].transform);
+            PersistentManager.instance.totalGoblins += goblinsToSpawn;
             ambushStart = true;
         }
     }
 
     bool GoblinsGone()
     {
-        for(int i = 0; i < goblins.Length - 1; i++)
+        for(int i = 0; i < goblinsToSpawn; i++)
         {
             if (goblins[i] == null)
                 deadGoblins++;
         }
-        if (deadGoblins == goblins.Length)
+        if (deadGoblins == goblinsToSpawn)
             return true;
         else
             return false;
@@ -65,6 +64,8 @@ public class Ambush : MonoBehaviour
         ambushFinished = true;
         PersistentManager.instance.TaskComplete(true, "You have survived the goblin ambush.");
         PersistentManager.instance.surviveAmbushCB.SetActive(true);
+        for (int i = 0; i < goblinsToSpawn; i++)
+            Destroy(aims[i].gameObject);
         Destroy(gameObject);
     }
 }
