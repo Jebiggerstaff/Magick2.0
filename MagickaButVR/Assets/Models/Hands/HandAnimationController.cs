@@ -5,31 +5,36 @@ using UnityEngine;
 public class HandAnimationController : MonoBehaviour
 {
     public AnimationClip handClose;
+    public AnimationClip Evocation;
+    public AnimationClip Enchantment;
+    public AnimationClip Transmutation;
+    public AnimationClip Conjuration;
+
 
     void Update()
     {
         if (Input.GetKeyDown("q"))
         {
             gameObject.GetComponent<Animator>().SetBool("isEvocation", true);
-            Invoke("StopEvocationAnim",handClose.length);
+            Invoke("StopEvocationAnim",Evocation.length);
         }
 
         if (Input.GetKeyDown("e"))
         {
             gameObject.GetComponent<Animator>().SetBool("isEnchantment", true);
-            Invoke("StopEnchantmentAnim",handClose.length);
+            Invoke("StopEnchantmentAnim",Enchantment.length);
         }
 
         if (Input.GetKeyDown("r"))
         {
             gameObject.GetComponent<Animator>().SetBool("isTransmutation", true);
-            Invoke("StopTransmutationAnim",handClose.length);
+            Invoke("StopTransmutationAnim",Transmutation.length);
         }
 
         if (Input.GetKeyDown("f"))
         {
             gameObject.GetComponent<Animator>().SetBool("isConjuration", true);
-            Invoke("StopConjurationAnim",handClose.length);
+            Invoke("StopConjurationAnim",Conjuration.length);
         }
 
         if (Input.GetKeyDown("z"))
