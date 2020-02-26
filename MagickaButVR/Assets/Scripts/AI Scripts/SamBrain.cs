@@ -20,7 +20,7 @@ public class SamBrain : MonoBehaviour
 		layerMask = ~layerMask;
 		moveSam = gameObject.GetComponent<NavMeshAgent>();
 		home = transform.position;
-		moveSam.ResetPath();
+		//moveSam.ResetPath();
 	}
 
     void Update()
@@ -45,14 +45,39 @@ public class SamBrain : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider obj)
+	void OnTriggerStay(Collider obj)
 	{
 		if(obj.tag == "Player" && enemy == null)
 		{
-			enemy = obj.gameObject;
+			Eyes();
 		}
 	}
 
+
+	void Eyes()
+	{
+		RaycastHit hit;
+		float distance = 25f;
+		float angle = 78;
+		float segments = angle - 1;
+		Vector3 startPos = transform.position + (Vector3.up * 2);
+		Vector3 targetPos = new Vector3();
+		float startAngle = -angle * .5f;
+		float finishAngle = angle * .5f;
+		float increment = angle / segments;
+
+		for(float i = startAngle; i < finishAngle; i += increment)
+		{
+			targetPos = (Quaternion.Euler(0, i, 0) * transform.forward).normalized * distance;
+
+			if (Physics.Raycast(startPos, targetPos, out hit))
+			{
+				if (hit.collider.gameObject.tag == "Player")
+					enemy = hit.collider.gameObject;
+			}
+			Debug.DrawRay(startPos, targetPos, Color.red);
+		}
+	}
 	/*
 	void OnTriggerStay(Collider obj)
 	{
