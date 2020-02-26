@@ -57,7 +57,7 @@ public class SamBrain : MonoBehaviour
 	void Eyes()
 	{
 		RaycastHit hit;
-		float distance = 25f;
+		float distance = 15f;
 		float angle = 78;
 		float segments = angle - 1;
 		Vector3 startPos = transform.position + (Vector3.up * 2);
@@ -70,12 +70,16 @@ public class SamBrain : MonoBehaviour
 		{
 			targetPos = (Quaternion.Euler(0, i, 0) * transform.forward).normalized * distance;
 
-			if (Physics.Raycast(startPos, targetPos, out hit))
+			if (Physics.Raycast(startPos, targetPos, out hit, distance))
 			{
+				//Debug.Log("Hit " + hit.collider.gameObject.name);
 				if (hit.collider.gameObject.tag == "Player")
+				{
 					enemy = hit.collider.gameObject;
+					//Debug.Log("REEEE");
+				}
 			}
-			Debug.DrawRay(startPos, targetPos, Color.red);
+			//Debug.DrawRay(startPos, targetPos, Color.red);
 		}
 	}
 	/*
