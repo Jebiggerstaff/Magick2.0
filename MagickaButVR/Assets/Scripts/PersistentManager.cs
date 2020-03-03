@@ -10,6 +10,8 @@ public class PersistentManager : MonoBehaviour
 	public Button resetButton;
 	public GameObject player;
 	public string zone;
+	public string preZone;
+	public string prepreZone;
 	public GameObject taskComplete;
 	public Text taskDesc;
 	double timer;
@@ -102,7 +104,7 @@ public class PersistentManager : MonoBehaviour
 				enteredCaveCB.SetActive(true);
 				TaskComplete(true, "Cave discovered");
 			}
-			else if(!escapeForest && zone == "Overgrown Path")
+			else if(!escapeForest && zone == "Overgrown Path" && preZone == "Forest" && prepreZone == "Village")
 			{
 				escapeForest = true;
 				escapeForestCB.SetActive(true);
@@ -191,14 +193,4 @@ public class PersistentManager : MonoBehaviour
 			
 		}
 	}
-
-	#region set variables
-	public void SetZone(string z) { zone = z; Debug.Log(zone); }
-	public void SetPlayer(GameObject p) { player = p; }
-	public void SetFirstSpell(bool b) { firstSpell = b; }
-	#endregion
-	#region get variables
-	public string GetZone() { return zone; }
-	public bool GetFirstSpell() { return firstSpell; }
-	#endregion
 }

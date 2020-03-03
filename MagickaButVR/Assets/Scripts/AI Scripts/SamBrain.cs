@@ -40,7 +40,7 @@ public class SamBrain : MonoBehaviour
 		if (enemy != null)
 		{
 			MoveToTarget();
-			if (PersistentManager.instance.GetZone() != homeZone)
+			if (PersistentManager.instance.zone != homeZone)
 				DeAggro();
 		}
 	}
