@@ -40,7 +40,7 @@ public class WolfBrain : MonoBehaviour
 		if (enemy != null)
 		{
 			MoveToTarget();
-			if (PersistentManager.instance.GetZone() != "Forest")
+			if (PersistentManager.instance.zone != "Forest")
 				DeAggro();
 		}
 	}

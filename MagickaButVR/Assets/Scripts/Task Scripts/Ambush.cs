@@ -20,7 +20,7 @@ public class Ambush : MonoBehaviour
     {
         if (ambushStart && !ambushFinished)
         {
-            if(PersistentManager.instance.GetZone() != "Forest")
+            if(PersistentManager.instance.zone != "Forest")
             {
                 for(int i = 0; i < goblinsToSpawn; i++)
                 {
