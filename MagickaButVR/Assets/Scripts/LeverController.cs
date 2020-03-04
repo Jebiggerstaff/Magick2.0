@@ -12,6 +12,9 @@ public class LeverController : MonoBehaviour
     {
         if (other.gameObject == player)
         {
+            PersistentManager.instance.openPortcullis = true;
+            PersistentManager.instance.openPortcullisCB.SetActive(true);
+            PersistentManager.instance.TaskComplete(true, "Opened the Portcullis");
             Destroy(gate);
         }
     }
