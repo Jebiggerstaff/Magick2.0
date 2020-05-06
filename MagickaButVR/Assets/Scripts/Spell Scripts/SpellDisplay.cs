@@ -593,14 +593,20 @@ public class SpellDisplay : MonoBehaviour
                     displayText = "";
                     polymorphUI.SetActive(false);
                     getTarget();
+
                     polyTemp = spellTarget.transform.lossyScale;
-                   
+
                     if (spellTarget.GetComponent<Rigidbody>() != null && spellTarget != player)
                     {
-                        displayText = "";
+                        spellEffectsTimer = spellLongevity * 10;
+                        activeSpell = "POLYMORPH";
+
                     }
-                    spellEffectsTimer = spellLongevity * 10;
-                    activeSpell = "POLYMORPH";
+                    else
+                    {
+                        displayText = "";
+                        activeSpell = "";
+                    }
                     break;
                 #endregion
                 #region Water Walking
