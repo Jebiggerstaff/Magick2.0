@@ -11,11 +11,6 @@ public class ElementSelect : MonoBehaviour
 
     static public string[] Combination = new string[3];
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

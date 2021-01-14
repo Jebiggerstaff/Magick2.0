@@ -13,8 +13,11 @@ public class CastMagic : MonoBehaviour
     private Vector3 move; 
 
     private GameObject Spell;
+    private GameObject spawnedLight;
+
     public GameObject FireballGameObject;
     public GameObject GreasePoolGameObject;
+    public GameObject LightGameObject;
     public GameObject Righthand;
     public GameObject spellTarget;
     public GameObject player;
@@ -22,7 +25,19 @@ public class CastMagic : MonoBehaviour
 
     public GameObject HasteScreenEffect;
     public GameObject JumpScreenEffect;
-    
+    public AudioClip IdentifySE;
+    public GameObject identifyGlow;
+    public float identifyDistance;
+    GameObject[] identifytargets;
+    public GameObject RainCloud;
+    private GameObject spawnedRain = null;
+    public BoxCollider water;
+    public GameObject Crate;
+    public GameObject Boulder;
+    private GameObject spawnedCrate = null;
+    private GameObject spawnedBoulder = null;
+    Vector3 polyTemp;
+
     public float spellTimer;
     private float targetDistance;
 
@@ -36,6 +51,14 @@ public class CastMagic : MonoBehaviour
     private bool CastingHaste = false;
     private bool OngoingHaste = false;
     private bool CastingGreasePool = false;
+    private bool CastingLight=false;
+    private bool CastingIdentify = false;
+    private bool CastingRain = false;
+    private bool CastingPolymorph = false;
+    private bool OngoingPolymorph = false;
+    private bool CastingWaterWalking = false;
+    private bool CastingConjureCrate = false;
+    private bool CastingConjureBoulder = false;
     #endregion
 
     #region UISpellGameobjects
@@ -67,17 +90,19 @@ public class CastMagic : MonoBehaviour
         if (Input.GetButtonDown("Fire2"))
         {
             //Activates Spells
-            if (CastingFireball == true)
+            if (CastingFireball)
             {
                 Fireball();
                 DisplayMagicUI.Channeling = false;
             }//Throws Fireball
-            if(CastingGreasePool == true)
+
+            else if(CastingGreasePool)
             {
                 GreasePool();
                 DisplayMagicUI.Channeling = false;
             }//Throws Grease Pool
-            else if (OngoingTelekinesis == true)
+
+            else if (OngoingTelekinesis)
             {
                 spellTarget.GetComponent<Rigidbody>().useGravity = true;
                 CastingTelekinesis = false;
@@ -85,13 +110,14 @@ public class CastMagic : MonoBehaviour
                 spellTarget = null;
                 DisplayMagicUI.Channeling = false;
             }//Stops Telekinesis
-            else if (CastingTelekinesis == true)
+            else if (CastingTelekinesis)
             {
                 Telekinesis();
                 OngoingTelekinesis = true;
                 
             }//Starts Telekinesis
-            else if (CastingJump == true)
+
+            else if (CastingJump)
             {
                 JumpScreenEffect.SetActive(true);
                 jumpUI.SetActive(false);
@@ -99,13 +125,14 @@ public class CastMagic : MonoBehaviour
                 OngoingJump = true;
                 CastingJump = false;
             }//Starts Jump
-            else if (spellTimer > 0 && OngoingJump == true)
+            else if (spellTimer > 0 && OngoingJump)
             {
                 JumpScreenEffect.SetActive(false);
                 OngoingJump = false;
                 DisplayMagicUI.Channeling = false;
             }//Stops Jump
-            else if (CastingHaste == true)
+
+            else if (CastingHaste)
             {
                 HasteScreenEffect.SetActive(true);
                 hasteUI.SetActive(false);
@@ -113,7 +140,7 @@ public class CastMagic : MonoBehaviour
                 OngoingHaste = true;
                 CastingHaste = false;
             }//Starts Haste
-            else if (spellTimer > 0 && OngoingHaste == true)
+            else if (spellTimer > 0 && OngoingHaste)
             {
                 HasteScreenEffect.SetActive(false);
                 OngoingHaste = false;
@@ -121,7 +148,56 @@ public class CastMagic : MonoBehaviour
                 pc.Acceleration = .08f;
             }//Stops Haste
 
+            else if (CastingLight)
+            {
+                Light();
+                DisplayMagicUI.Channeling = false;
+            }//Casts Light
 
+            else if (CastingIdentify)
+            {
+                Identify();
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (CastingRain)
+            {
+                Rain();
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (CastingConjureCrate)
+            {
+                ConjureCrate();
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (CastingConjureBoulder)
+            {
+                ConjureBoulder();
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (CastingWaterWalking)
+            {
+                WaterWalking();
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (OngoingPolymorph)
+            {
+                polyTemp = spellTarget.transform.lossyScale;
+                CastingPolymorph = false;
+                OngoingPolymorph = false;
+                spellTarget = null;
+                DisplayMagicUI.Channeling = false;
+            }
+
+            else if (CastingPolymorph)
+            {
+                Polymorph();
+                OngoingPolymorph = true;
+            }
 
         }//Activates & Deactivates Timed Spells      
         #region JumpTimer
@@ -179,7 +255,30 @@ public class CastMagic : MonoBehaviour
                 }
             }
         }
-        
+
+        if (OngoingPolymorph == true)
+        {
+            if (spellTarget == null)
+            {
+                OngoingPolymorph = false;
+                CastingPolymorph = false;
+                DisplayMagicUI.Channeling = false;
+
+            }
+            else
+            {
+                //Debug.LogError("Primary = " + OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger));
+
+                if (spellTarget.transform.lossyScale.magnitude <= polyTemp.magnitude * 1.5 && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= 0)
+                {
+                    spellTarget.transform.localScale += new Vector3(.1f, .1f, .1f);
+                }
+                else if (spellTarget.transform.lossyScale.magnitude >= polyTemp.magnitude * .5 && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= 0)
+                {
+                    spellTarget.transform.localScale -= new Vector3(.1f, .1f, .1f);
+                }
+            }
+        }
     }
     
 
@@ -194,7 +293,6 @@ public class CastMagic : MonoBehaviour
                 fireballUI.SetActive(true);
                 Spell = Instantiate(FireballGameObject, DisplayMagicUI.RightHand.transform);
                 CastingFireball = true;
-                Debug.LogWarning("Cast Fireball");
             }
             
         }//Fireball
@@ -208,7 +306,6 @@ public class CastMagic : MonoBehaviour
                 Spell = Instantiate(GreasePoolGameObject, DisplayMagicUI.RightHand.transform);
                 DisplayMagicUI.RightHand.transform.GetChild(1).GetComponent<SphereCollider>().isTrigger = false;
                 CastingGreasePool = true;
-                Debug.LogWarning("Cast Grease Pool");
             }
 
         }//Grease Pool
@@ -218,7 +315,6 @@ public class CastMagic : MonoBehaviour
             DisplayMagicUI.Channeling = true;
             telekinesisUI.SetActive(true);
             CastingTelekinesis = true;
-            Debug.LogWarning("Cast Telekinesis");
         }//Telekinesis
 
         if (Combination[0] == "Enchantment" && Combination[1] == "Self" && Combination[2] == "Gravitation")
@@ -226,7 +322,6 @@ public class CastMagic : MonoBehaviour
             DisplayMagicUI.Channeling = true;
             jumpUI.SetActive(true);
             CastingJump = true;
-            Debug.LogWarning("Cast Jump");
         }//Jump
 
         if (Combination[0] == "Enchantment" && Combination[1] == "Self" && Combination[2] == "Ascendant")
@@ -234,12 +329,181 @@ public class CastMagic : MonoBehaviour
             DisplayMagicUI.Channeling = true;
             CastingHaste = true;
             hasteUI.SetActive(true);
-            Debug.LogWarning("Cast Haste");
         }//Haste
 
-        
+        if (Combination[0] == "Evocation" && Combination[1] == "Area" && Combination[2] == "Ascendant")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingLight = true;
+            lightUI.SetActive(true);
+        }//Light
+
+        if (Combination[0] == "Enchantment" && Combination[1] == "Area" && Combination[2] == "Ascendant")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingIdentify = true;
+            identifyUI.SetActive(true);
+        }//Identify
+
+        if (Combination[0] == "Evocation" && Combination[1] == "World" && Combination[2] == "Primal")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingRain = true;
+            rainUI.SetActive(true);
+        }//Rain
+
+        if (Combination[0] == "Transmutation" && Combination[1] == "Stranger" && Combination[2] == "Ascendant")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingPolymorph = true;
+            polymorphUI.SetActive(true);
+        }//Polymorph
+
+        if (Combination[0] == "Transmutation" && Combination[1] == "Self" && Combination[2] == "Ascendant")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingWaterWalking = true;
+            waterWalkingUI.SetActive(true);
+        }//Water Walking
+
+        if (Combination[0] == "Creation" && Combination[1] == "World" && Combination[2] == "Gravity")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingConjureCrate = true;
+            ConjureCrateUI.SetActive(true);
+        }//Conjure Crate
+
+        if (Combination[0] == "Creation" && Combination[1] == "World" && Combination[2] == "Primal")
+        {
+            DisplayMagicUI.Channeling = true;
+            CastingConjureBoulder = true;
+            ConjureBoulderUI.SetActive(true);
+        }//Conjure Boulder
 
     }
+
+    public void Polymorph()
+    {
+        GetTarget();
+        if (spellTarget != null)
+        {
+
+            polyTemp = spellTarget.transform.lossyScale;
+
+            if (spellTarget.GetComponent<Rigidbody>() != null && spellTarget != player)
+            {
+                
+            }
+            else
+            {
+                OngoingPolymorph = false;
+                CastingPolymorph = false;
+                DisplayMagicUI.Channeling = false;
+            }
+        }
+        polymorphUI.SetActive(false);
+ 
+    }
+
+    public void ConjureCrate()
+    {
+        int layerMask = 0 << 8;
+        layerMask = ~layerMask;
+        RaycastHit hit;
+        if (spawnedCrate != null)
+        {
+            Destroy(spawnedCrate);
+        }
+        if (Physics.Raycast(new Ray(Righthand.transform.position, Righthand.transform.forward), out hit, 9.9f, layerMask))
+        {
+            spawnedCrate = Instantiate(Crate, hit.point, transform.rotation);
+        }
+        else
+            spawnedCrate = Instantiate(Crate, spellGuide.transform.position, transform.rotation);
+
+        CastingConjureCrate = false;
+        ConjureCrateUI.SetActive(false);
+    }
+    
+    public void ConjureBoulder()
+    {
+        int layerMask = 0 << 8;
+        layerMask = ~layerMask;
+        RaycastHit hit;
+        if (spawnedBoulder != null)
+        {
+            Destroy(spawnedBoulder);
+        }
+        if (Physics.Raycast(new Ray(Righthand.transform.position, Righthand.transform.forward), out hit, 9.9f, layerMask))
+        {
+            spawnedBoulder = Instantiate(Boulder, hit.point, transform.rotation);
+        }
+        else
+            spawnedBoulder = Instantiate(Boulder, spellGuide.transform.position, transform.rotation);
+
+        CastingConjureBoulder = false;
+        ConjureBoulderUI.SetActive(false);
+    }
+
+    public void WaterWalking()
+    {
+        water.enabled = true;
+        CastingWaterWalking = false;
+        waterWalkingUI.SetActive(false);
+    }//Sets water collider to true so the player can walk on it
+
+    public void Rain()
+    {
+        rainUI.SetActive(false);
+        if (spawnedRain != null)
+        {
+            Destroy(spawnedRain);
+            spawnedRain = Instantiate(RainCloud, player.transform.position + (Vector3.up * 50), player.transform.rotation);
+        }
+        else
+            spawnedRain = Instantiate(RainCloud, player.transform.position + (Vector3.up * 50), player.transform.rotation);
+
+        CastingRain = false;
+        rainUI.SetActive(false);
+    }//Spawns the rain cloud in the air
+
+    public void Identify() 
+    {
+        identifytargets = GameObject.FindGameObjectsWithTag("Identifiable");
+        foreach (GameObject target in identifytargets)
+        {
+            if (Vector3.Distance(player.transform.position, target.transform.position) < identifyDistance)
+            {
+                if (target.transform.childCount == 0 || target.transform.GetChild(0).name != "IdentifyGlow(Clone)")
+                    Instantiate(identifyGlow, target.transform.position, transform.rotation, target.transform);
+            }
+        }
+        CastingIdentify = false;
+        identifyUI.SetActive(false);
+
+    }//Code for putting glow on identifiable objects
+
+    public void Light()
+    {
+        int layerMask = 0 << 8;
+        layerMask = ~layerMask;
+        RaycastHit hit;
+
+        if (spawnedLight != null)
+        {
+            Destroy(spawnedLight);
+        }
+        if (Physics.Raycast(new Ray(Righthand.transform.position, Righthand.transform.forward), out hit, 9.9f, layerMask))
+        {
+            spawnedLight = Instantiate(LightGameObject, hit.point, transform.rotation);
+        }
+        else
+            spawnedLight = Instantiate(LightGameObject, spellGuide.transform.position, transform.rotation);  
+        
+        CastingLight = false;
+        lightUI.SetActive(false);
+
+    }//Code for spawning the Light orb
 
     public void Fireball()
     {
@@ -256,8 +520,9 @@ public class CastMagic : MonoBehaviour
         Spell.transform.parent = null;
         Spell.GetComponent<Rigidbody>().useGravity = true;
         Spell.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
-        fireballUI.SetActive(false);
+        greaseUI.SetActive(false);
         CastingGreasePool = false;
+        
     }
 
     public void Telekinesis()

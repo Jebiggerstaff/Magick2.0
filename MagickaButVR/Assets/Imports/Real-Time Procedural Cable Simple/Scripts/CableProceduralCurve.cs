@@ -33,7 +33,7 @@ public class CableProceduralCurve : MonoBehaviour
 
 		if (!endPointTransform)
 		{
-			Debug.LogError("No Endpoint Transform assigned to Cable_Procedural component attached to " + gameObject.name);
+			//Debug.LogError("No Endpoint Transform assigned to Cable_Procedural component attached to " + gameObject.name);
 			return;
 		}
 

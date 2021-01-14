@@ -20,10 +20,11 @@ public class SpellDisplay : MonoBehaviour
     public GameObject HasteScreenEffect;
     public GameObject JumpScreenEffect;
     public GameObject RainCloud;
+    private GameObject spawnedRain = null;
     private GameObject spawnedLight = null;
     private GameObject spawnedCrate = null;
     private GameObject spawnedBoulder = null;
-    private GameObject spawnedRain = null;
+    
 
     public float scale;
     public float identifyDistance;

@@ -17,16 +17,10 @@ public class DisplayMagicUI : MonoBehaviour
 
     public ElementSelect ElementSelect;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && SchoolUIOpen == false && Channeling==false)
+        if (Input.GetButtonDown("Fire1") && SchoolUIOpen == false && TargetUIOpen == false && ForceUIOpen == false && Channeling==false)
         {
             OpenSchoolUI();
         }
