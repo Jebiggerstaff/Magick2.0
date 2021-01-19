@@ -40,12 +40,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 [AddComponentMenu("First Person AIO")]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
 public class FirstPersonAIO : MonoBehaviour {
+
+    private PlayerInputActions controls;
 
     #region Script Header and Cosmetics
     [Header("                       First Person All-in-One v19.6.7cu", order = 0)]
@@ -247,6 +251,10 @@ public class BETA_SETTINGS{
 
     private void Awake()
     {
+
+        controls = new PlayerInputActions();
+        controls.Enable();
+
         #region Look Settings - Awake
         originalRotation = transform.localRotation.eulerAngles;
 
@@ -322,9 +330,9 @@ public class BETA_SETTINGS{
             float mouseXInput;
             float mouseYInput;
             float camFOV = playerCamera.GetComponent<Camera>().fieldOfView;
-            mouseXInput = Input.GetAxis("Mouse Y");
-            mouseYInput = Input.GetAxis("Mouse X");
-            if(targetAngles.y > 180) { targetAngles.y -= 360; followAngles.y -= 360; } else if(targetAngles.y < -180) { targetAngles.y += 360; followAngles.y += 360; }
+            mouseXInput = controls.Player.LookY.ReadValue<float>();
+            mouseYInput = controls.Player.LookX.ReadValue<float>();
+            if (targetAngles.y > 180) { targetAngles.y -= 360; followAngles.y -= 360; } else if(targetAngles.y < -180) { targetAngles.y += 360; followAngles.y += 360; }
             if(targetAngles.x > 180) { targetAngles.x -= 360; followAngles.x -= 360; } else if(targetAngles.x < -180) { targetAngles.x += 360; followAngles.x += 360; }
             targetAngles.y += mouseYInput * (mouseSensitivity - ((baseCamFOV-camFOV)*fOVToMouseSensitivity)/6f);
             targetAngles.x += mouseXInput * (mouseSensitivity - ((baseCamFOV-camFOV)*fOVToMouseSensitivity)/6f);
@@ -362,9 +370,9 @@ public class BETA_SETTINGS{
         
         bool wasWalking = !isSprinting;
         if(useStamina) {
-            if(staminaInternal > 0) { if(!isCrouching) { isSprinting = Input.GetKey(KeyCode.LeftShift); } }else{isSprinting=false;}
-            if(isSprinting == true && staminaInternal > 0) { staminaInternal -= staminaDepletionSpeed; } else if(staminaInternal < (Stamina*10) && !Input.GetKey(KeyCode.LeftShift)) { staminaInternal += staminaDepletionSpeed / 2; }    
-        } else { isSprinting = Input.GetKey(KeyCode.LeftShift); }
+            if(staminaInternal > 0) { if(!isCrouching) { isSprinting = controls.Player.Sprint.triggered; } }else{isSprinting=false;}
+            if(isSprinting == true && staminaInternal > 0) { staminaInternal -= staminaDepletionSpeed; } else if(staminaInternal < (Stamina*10) && !controls.Player.Sprint.triggered) { staminaInternal += staminaDepletionSpeed / 2; }    
+        } else { isSprinting = controls.Player.Sprint.triggered; }
 
         advanced.tooSteep = false;
         float inrSprintSpeed;
@@ -449,13 +457,13 @@ public class BETA_SETTINGS{
             }
 
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = controls.Player.MoveX.ReadValue<float>();
+        float verticalInput = controls.Player.MoveY.ReadValue<float>();
         inputXY = new Vector2(horizontalInput, verticalInput);
         if(inputXY.magnitude > 1) { inputXY.Normalize(); }
        
         float yv = fps_Rigidbody.velocity.y;
-        bool didJump = canHoldJump?Input.GetButton("Jump"): Input.GetButtonDown("Jump");
+        bool didJump = canHoldJump? controls.Player.Jump.triggered : controls.Player.Jump.triggered;
 
         if (!canJump) didJump = false;
 
@@ -479,22 +487,6 @@ public class BETA_SETTINGS{
         if(fOVKick.useFOVKick && wasWalking == isSprinting && fps_Rigidbody.velocity.magnitude > 0.1f && !isCrouching){
             StopAllCoroutines();
             StartCoroutine(wasWalking ? FOVKickOut() : FOVKickIn());
-        }
-
-        if(_crouchModifiers.useCrouch &&  _crouchModifiers.CrouchInputAxis != string.Empty) {
-            isCrouching = _crouchModifiers.crouchOverride ?  true: Input.GetAxis(_crouchModifiers.CrouchInputAxis) >0;
-
-            if(isCrouching) {
-                    capsule.height = Mathf.MoveTowards(capsule.height, _crouchModifiers.colliderHeight/2, 5*Time.deltaTime);
-                        walkSpeedInternal = walkSpeed*_crouchModifiers.crouchWalkSpeedMultiplier;
-                        sprintSpeedInternal = sprintSpeed*_crouchModifiers.crouchSprintSpeedMultiplier;
-                        jumpPowerInternal = jumpPower* _crouchModifiers.crouchJumpPowerMultiplier;
-                } else {
-                capsule.height = Mathf.MoveTowards(capsule.height, _crouchModifiers.colliderHeight, 5*Time.deltaTime);    
-                walkSpeedInternal = walkSpeed;
-                sprintSpeedInternal = sprintSpeed;
-                jumpPowerInternal = jumpPower;
-            }
         }
 
         #endregion

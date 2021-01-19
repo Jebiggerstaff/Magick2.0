@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+
 
 public class SpellDisplay : MonoBehaviour
 {
@@ -80,28 +83,44 @@ public class SpellDisplay : MonoBehaviour
     public GameObject CastleTP;
     public GameObject CaveTP;
 
-    //char[,] symbols = new char[3,4] {{'\u16B2', '\u16B7', '\u16D2', '\u16C7' }, {'\u16D7', '\u16C1', '\u0000', '\u16C3' }, {'\u16D6', '\u16BB', '\u16AB', '\u16C8' }};
-
+    private PlayerInputActions controls;
+    Keyboard keyboard = Keyboard.current;
 
     void Start()
     {
         text = GetComponent<Text>();
     }
+    private void Awake()
+    {
+        controls = new PlayerInputActions();
+        controls.Enable();
+    }
+
 
     void Update()
     {
+        
         //Detects spell inputs
-        if (!string.IsNullOrEmpty(Input.inputString) && activeSpell == null)
+        if (/*!string.IsNullOrEmpty(input) &&*/ activeSpell == null)
         {
-            input = Input.inputString.ToLower();
+            if (displayText.Length == 3)
+                input = "";
+            else if (controls.Player._1stSpellKey.triggered)
+                input = "q";
+            else if (controls.Player._2ndSpellKey.triggered)
+                input = "e";
+            else if (controls.Player._3rdSpellKey.triggered)
+                input = "r";
+            else if (controls.Player._4thSpellKey.triggered)
+                input = "f";
+
             if (input == "q" || input == "e" || input == "r" || input == "f")
             {
 
                 //ensures spells only go to 3 commands
                 if (displayText.Length < 3)
                 {
-                    
-
+                    Debug.Log(input);
                     //Display rune
                     switch (input)
                     {
@@ -141,12 +160,16 @@ public class SpellDisplay : MonoBehaviour
                             break;
                     }
                     displayText += input;
+                    input = "";
                 }
             }
+        
         }
+        
 
         //Detects if spell timer is up or the user is ending a spell
-        if ((spellEffectsTimer <= 0 || Input.GetMouseButtonDown(1)) && activeSpell != null)
+
+        if ((spellEffectsTimer <= 0 || controls.Player.CancelSpell.triggered) && activeSpell != null)
         {
             Clear();
             activeSpell = null;
@@ -154,7 +177,8 @@ public class SpellDisplay : MonoBehaviour
         }
 
         //Detects if user is clearing their spell
-        else if (Input.GetMouseButtonDown(1))
+        
+        else if (controls.Player.CancelSpell.triggered)
         {
             Clear();
             DestroyRunes();
@@ -201,16 +225,13 @@ public class SpellDisplay : MonoBehaviour
                     break;
             }
         }
-    }
 
-    void FixedUpdate()
-    {
         //Probably move this to when the spell activates, then deactivate it when a spell ends
         //Otherwise have it under where spell effects take place
         //Detects if haste is active and then modifies FOV
         if (player.GetComponent<FirstPersonAIO>().sprintSpeed != 7)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (controls.Player.CancelSpell.triggered)
             {
                 playerCamera.GetComponent<Camera>().fieldOfView = 60;
                 player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
@@ -220,11 +241,12 @@ public class SpellDisplay : MonoBehaviour
         if (player.GetComponent<FirstPersonAIO>().jumpPower != 5)
         {
 
-            if (Input.GetButtonDown("Jump")){
+            if (controls.Player.Jump.triggered)
+            {
                 player.GetComponent<AudioSource>().Play();
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (controls.Player.CancelSpell.triggered)
             {
                 player.GetComponent<FirstPersonAIO>().jumpPower = 5;
                 JumpScreenEffect.SetActive(false);
@@ -232,7 +254,7 @@ public class SpellDisplay : MonoBehaviour
         }
 
         //Detects mouse wheel scroll, and then applies it to a spell if possible
-        if (Input.mouseScrollDelta != new Vector2(0, 0))
+        if (controls.Player.Scroll.ReadValue<Vector2>() != new Vector2(0, 0))
         {
             switch (activeSpell)
             {
@@ -242,17 +264,17 @@ public class SpellDisplay : MonoBehaviour
                     {
                         //Debug.Log((Vector3.Distance(spellGuide.transform.position, player.transform.position)));
                         move = spellGuide.transform.localPosition;
-                        move.z += Input.mouseScrollDelta.y / 10f;
+                        move.z += controls.Player.Scroll.ReadValue<float>() / 10f;
                         spellGuide.transform.localPosition = move;
                     }
-                    else if (Vector3.Distance(spellGuide.transform.position, player.transform.position) > 10 && Input.mouseScrollDelta.y <= 0)
+                    else if (Vector3.Distance(spellGuide.transform.position, player.transform.position) > 10 && controls.Player.Scroll.ReadValue<float>() <= 0)
                     {
                         //Debug.Log((Vector3.Distance(spellGuide.transform.position, player.transform.position)));
                         move = spellGuide.transform.localPosition;
                         move.z = 9.5f;
                         spellGuide.transform.localPosition = move;
                     }
-                    else if (Vector3.Distance(spellGuide.transform.position, player.transform.position) < 3 && Input.mouseScrollDelta.y >= 0)
+                    else if (Vector3.Distance(spellGuide.transform.position, player.transform.position) < 3 && controls.Player.Scroll.ReadValue<float>() >= 0)
                     {
                         //Debug.Log((Vector3.Distance(spellGuide.transform.position, player.transform.position)));
                         move = spellGuide.transform.localPosition;
@@ -263,11 +285,11 @@ public class SpellDisplay : MonoBehaviour
                 #endregion
                 #region POLYMORPH
                 case "POLYMORPH":
-                    if(spellTarget.transform.lossyScale.magnitude <= polyTemp.magnitude*1.5 && Input.mouseScrollDelta.y >= 0)
+                    if(spellTarget.transform.lossyScale.magnitude <= polyTemp.magnitude*1.5 && controls.Player.Scroll.ReadValue<float>() >= 0)
                     {                     
                         spellTarget.transform.localScale += new Vector3(.1f,.1f,.1f);           
                     }
-                    else if (spellTarget.transform.lossyScale.magnitude >= polyTemp.magnitude * .5 && Input.mouseScrollDelta.y <= 0)
+                    else if (spellTarget.transform.lossyScale.magnitude >= polyTemp.magnitude * .5 && controls.Player.Scroll.ReadValue<float>() <= 0)
                     {
                         spellTarget.transform.localScale -= new Vector3(.1f, .1f, .1f);
                     }
@@ -427,7 +449,7 @@ public class SpellDisplay : MonoBehaviour
         }
 
         //Activates Spells
-        if (Input.GetMouseButtonDown(0) && displayText.Length == 3 && activeSpell == null)
+        if (controls.Player.Fire.triggered && displayText.Length == 3 && activeSpell == null)
         {
 			if (!PersistentManager.instance.firstSpell)
 				PersistentManager.instance.firstSpell = true;

@@ -15,6 +15,7 @@ permissions and limitations under the License.
 using System;
 using UnityEngine;
 
+
 /// <summary>
 /// Controls the player's movement in virtual reality.
 /// </summary>
@@ -160,10 +161,10 @@ public class OVRPlayerController : MonoBehaviour
 
     }
 
-    void Awake()
+	void Awake()
 	{
 
-        Controller = gameObject.GetComponent<CharacterController>();
+		Controller = gameObject.GetComponent<CharacterController>();
 
 		if (Controller == null)
 			Debug.LogWarning("OVRPlayerController: No CharacterController attached.");

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 
 public class UIController : MonoBehaviour
@@ -74,7 +76,13 @@ public class UIController : MonoBehaviour
     public AudioClip PageTurn;
     public AudioClip BookOpen;
 
+    private PlayerInputActions controls;
 
+    private void Awake()
+    {
+        controls = new PlayerInputActions();
+        controls.Enable();
+    }
 
     void Start()
     {
@@ -106,7 +114,7 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         //open pause menu
-        if (Input.GetKeyDown(KeyCode.Escape) && InOptionsMenu == false)
+        if (controls.UI.PauseButton.triggered && InOptionsMenu == false)
         {
             InOptionsMenu = true;
             firstPersonGroup.GetComponent<FirstPersonAIO>().playerCanMove = false;
@@ -118,7 +126,7 @@ public class UIController : MonoBehaviour
             spellDisplay.GetComponent<SpellDisplay>().Clear();
         }
         //close pause menu
-        else if (Input.GetKeyDown(KeyCode.Escape) && InOptionsMenu == true)
+        else if (controls.UI.PauseButton.triggered && InOptionsMenu == true)
         {
             InOptionsMenu = false;
             firstPersonGroup.GetComponent<FirstPersonAIO>().playerCanMove = true;
@@ -129,7 +137,7 @@ public class UIController : MonoBehaviour
             PauseMenu.SetActive(false);
         }
         //open Spellbook
-        if (Input.GetKeyDown(KeyCode.Tab) && InSpellbookMenu == false)
+        if (controls.UI.SpellBookButton.triggered && InSpellbookMenu == false)
         {
             InSpellbookMenu = true;
             firstPersonGroup.GetComponent<FirstPersonAIO>().playerCanMove = false;
@@ -142,7 +150,7 @@ public class UIController : MonoBehaviour
             OpenBook();
         }
         //close Spellbook
-        else if(Input.GetKeyDown(KeyCode.Tab) && InSpellbookMenu == true)
+        else if(controls.UI.SpellBookButton.triggered && InSpellbookMenu == true)
         {
             InSpellbookMenu = false;
             firstPersonGroup.GetComponent<FirstPersonAIO>().playerCanMove = true;
