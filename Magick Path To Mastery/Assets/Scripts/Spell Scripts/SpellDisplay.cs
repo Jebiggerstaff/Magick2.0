@@ -27,10 +27,9 @@ public class SpellDisplay : MonoBehaviour
     private GameObject spawnedLight = null;
     private GameObject spawnedCrate = null;
     private GameObject spawnedBoulder = null;
-    
 
-    public float scale;
-    public float spacing;
+
+    public Text SpellProgressText;
     public float identifyDistance;
 
     #region UISpellGameobjects
@@ -67,9 +66,6 @@ public class SpellDisplay : MonoBehaviour
     bool playerTouching; //Determines if player is touching object that is being targeted
     Vector3 move; //Used to move objects in telekinesis
     double spellEffectsTimer = 0; //Used to countdown how long a spell lasts
-    GameObject newRune1 = null; //Used to display runes on screen
-    GameObject newRune2 = null;//Used to display runes on screen
-    GameObject newRune3 = null;//Used to display runes on screen
     Material mat = null;//Used for telekinesis to get material of spellTarget;
     GameObject[] identifytargets;
     Vector3 polyTemp;
@@ -127,35 +123,35 @@ public class SpellDisplay : MonoBehaviour
                     {
                         case "q":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Evocation", gameObject.transform, new Vector3(scale , scale, scale), new Vector3(-spacing, -30f, 0f));
+                                SpellProgressText.text += "Evocation";
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Self", gameObject.transform, new Vector3(scale, scale , scale), new Vector3(0f, -30f, 0f));
+                                SpellProgressText.text += " -- Self";
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Gravity", gameObject.transform, new Vector3(scale , scale , scale), new Vector3(spacing, -30f, 0f));
+                                SpellProgressText.text += " -- Gravity";
                             break;
                         case "e":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Enchantment", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(-spacing, -30f, 0f));
+                                SpellProgressText.text += "Enchantment";
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Stranger", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(0f, -30f, 0f));
+                                SpellProgressText.text += " -- Stranger";
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Primal", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
+                                SpellProgressText.text += " -- Primal";
                             break;
                         case "r":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Transmutation", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(-spacing, -30f, 0f));
+                                SpellProgressText.text += "Transmutation";
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Area", gameObject.transform, new Vector3(scale , scale , scale), new Vector3(0f, -30f, 0f));
+                                SpellProgressText.text += " -- Area";
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Mental", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
+                                SpellProgressText.text += " -- Mental";
                             break;
                         case "f":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Illusion", gameObject.transform, new Vector3(scale, scale , scale ), new Vector3(-spacing, -30f, 0f));
+                                SpellProgressText.text += "Illusion";
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/World", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(0f, -30f, 0f));
+                                SpellProgressText.text += " -- World";
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Ascendant", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
+                                SpellProgressText.text += " -- Ascendant";
                             break;
                         default:
                             break;
@@ -788,33 +784,9 @@ public class SpellDisplay : MonoBehaviour
         }
     }
 
-    //Creates runes
-    public GameObject MakeRune(string path, Transform parent, Vector3 scale, Vector3 position)
-    {
-        GameObject rune = Instantiate(Resources.Load(path), parent) as GameObject;
-        rune.transform.localScale = scale;
-        rune.transform.localPosition = rune.transform.localPosition + position;
-
-        return rune;
-    }
-
     public void DestroyRunes()
     {
-        if (newRune1 != null)
-        {
-            GameObject.Destroy(newRune1);
-            newRune1 = null;
-        }
-        if (newRune2 != null)
-        {
-            GameObject.Destroy(newRune2);
-            newRune2 = null;
-        }
-        if (newRune3 != null)
-        {
-            GameObject.Destroy(newRune3);
-            newRune3 = null;
-        }
+        SpellProgressText.text = "";
     }
 
     public void Clear()
