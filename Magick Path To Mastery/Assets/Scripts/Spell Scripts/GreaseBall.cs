@@ -12,7 +12,7 @@ public class GreaseBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody>().velocity = transform.forward * 550f * Time.deltaTime;
+        GetComponent<Rigidbody>().velocity = transform.forward * 2000f * Time.deltaTime;
     }
 
 
@@ -30,14 +30,21 @@ public class GreaseBall : MonoBehaviour
             Object.Destroy(gameObject);
         }
     }
-    void OnTriggerEnter()
+    
+  
+
+    void OnTriggerEnter(Collider obj)
 	{
-        if (lifeTimer <= 9.7)
+
+        if (obj.tag != "Player")
         {
-            collide = true;
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            Instantiate(greasepool, new Vector3(this.transform.position.x, this.transform.position.y + .1f, this.transform.position.z), new Quaternion(9, 0, 0, 0));
-            Object.Destroy(gameObject);
+            if (lifeTimer <= 9.7)
+            {
+                collide = true;
+                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                Instantiate(greasepool, new Vector3(this.transform.position.x, this.transform.position.y + .1f, this.transform.position.z), new Quaternion(9, 0, 0, 0));
+                Object.Destroy(gameObject);
+            }
         }
     }
 }

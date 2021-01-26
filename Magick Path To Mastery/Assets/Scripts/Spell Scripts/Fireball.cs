@@ -18,7 +18,7 @@ public class Fireball : MonoBehaviour
     {
         if (collide == false)
         {
-            GetComponent<Rigidbody>().velocity = transform.forward * 1000f * Time.deltaTime;
+            GetComponent<Rigidbody>().velocity = transform.forward * 2000f * Time.deltaTime;
         }
         else
         {

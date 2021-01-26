@@ -129,6 +129,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Value"",
+                    ""id"": ""f5475dc2-5864-45b1-958e-d2d0305fa827"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -547,6 +555,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""SpellKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""844b21de-b6d6-4e08-bd42-34536e89d109"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1198,6 +1217,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_SpellKeys = m_Player.FindAction("SpellKeys", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("Pause Button", throwIfNotFound: true);
@@ -1275,6 +1295,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Scroll;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_SpellKeys;
+    private readonly InputAction m_Player_Crouch;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1293,6 +1314,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @SpellKeys => m_Wrapper.m_Player_SpellKeys;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1344,6 +1366,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @SpellKeys.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpellKeys;
                 @SpellKeys.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpellKeys;
                 @SpellKeys.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpellKeys;
+                @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1390,6 +1415,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @SpellKeys.started += instance.OnSpellKeys;
                 @SpellKeys.performed += instance.OnSpellKeys;
                 @SpellKeys.canceled += instance.OnSpellKeys;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -1576,6 +1604,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnScroll(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSpellKeys(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -349,6 +349,7 @@ public class BETA_SETTINGS{
         jumpPowerInternal = jumpPower;
 		walkSpeedInternal = walkSpeed;
 		sprintSpeedInternal = sprintSpeed;
+
         #endregion
 
         #region Headbobbing Settings - Update
@@ -358,10 +359,7 @@ public class BETA_SETTINGS{
         #region BETA_SETTINGS - Update
 
         #endregion
-    }
 
-    private void FixedUpdate()
-    {
         #region Look Settings - FixedUpdate
 
         #endregion
@@ -487,6 +485,26 @@ public class BETA_SETTINGS{
         if(fOVKick.useFOVKick && wasWalking == isSprinting && fps_Rigidbody.velocity.magnitude > 0.1f && !isCrouching){
             StopAllCoroutines();
             StartCoroutine(wasWalking ? FOVKickOut() : FOVKickIn());
+        }
+
+        if (_crouchModifiers.useCrouch && _crouchModifiers.CrouchInputAxis != string.Empty)
+        {
+            isCrouching = _crouchModifiers.crouchOverride ? true : controls.Player.Crouch.ReadValue<float>() > 0f;
+
+            if (isCrouching)
+            {
+                capsule.height = Mathf.MoveTowards(capsule.height, _crouchModifiers.colliderHeight / 2, 5 * Time.deltaTime);
+                walkSpeedInternal = walkSpeed * _crouchModifiers.crouchWalkSpeedMultiplier;
+                sprintSpeedInternal = sprintSpeed * _crouchModifiers.crouchSprintSpeedMultiplier;
+                jumpPowerInternal = jumpPower * _crouchModifiers.crouchJumpPowerMultiplier;
+            }
+            else
+            {
+                capsule.height = Mathf.MoveTowards(capsule.height, _crouchModifiers.colliderHeight, 5 * Time.deltaTime);
+                walkSpeedInternal = walkSpeed;
+                sprintSpeedInternal = sprintSpeed;
+                jumpPowerInternal = jumpPower;
+            }
         }
 
         #endregion

@@ -30,6 +30,7 @@ public class SpellDisplay : MonoBehaviour
     
 
     public float scale;
+    public float spacing;
     public float identifyDistance;
 
     #region UISpellGameobjects
@@ -126,35 +127,35 @@ public class SpellDisplay : MonoBehaviour
                     {
                         case "q":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Evocation", gameObject.transform, new Vector3(scale * 4f, scale * 4f, scale * 4f), new Vector3(-60f, -30f, 0f));
+                                newRune1 = MakeRune("Runes/Evocation", gameObject.transform, new Vector3(scale , scale, scale), new Vector3(-spacing, -30f, 0f));
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Self", gameObject.transform, new Vector3(scale * 3.4f, scale * 3.4f, scale * 3.4f), new Vector3(0f, -30f, 0f));
+                                newRune2 = MakeRune("Runes/Self", gameObject.transform, new Vector3(scale, scale , scale), new Vector3(0f, -30f, 0f));
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Gravity", gameObject.transform, new Vector3(scale * 2.6f, scale * 2.6f, scale * 2.6f), new Vector3(60f, -30f, 0f));
+                                newRune3 = MakeRune("Runes/Gravity", gameObject.transform, new Vector3(scale , scale , scale), new Vector3(spacing, -30f, 0f));
                             break;
                         case "e":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Enchantment", gameObject.transform, new Vector3(scale * 4.5f, scale * 4.5f, scale * 4.5f), new Vector3(-60f, -30f, 0f));
+                                newRune1 = MakeRune("Runes/Enchantment", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(-spacing, -30f, 0f));
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Stranger", gameObject.transform, new Vector3(scale * 2.5f, scale * 2.5f, scale * 2.5f), new Vector3(0f, -30f, 0f));
+                                newRune2 = MakeRune("Runes/Stranger", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(0f, -30f, 0f));
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Primal", gameObject.transform, new Vector3(scale * 4.5f, scale * 4.5f, scale * 4.5f), new Vector3(60f, -30f, 0f));
+                                newRune3 = MakeRune("Runes/Primal", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
                             break;
                         case "r":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Transmutation", gameObject.transform, new Vector3(scale * 3f, scale * 3f, scale * 3f), new Vector3(-60f, -30f, 0f));
+                                newRune1 = MakeRune("Runes/Transmutation", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(-spacing, -30f, 0f));
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/Area", gameObject.transform, new Vector3(scale * 2.5f, scale * 2.5f, scale * 2.5f), new Vector3(0f, -30f, 0f));
+                                newRune2 = MakeRune("Runes/Area", gameObject.transform, new Vector3(scale , scale , scale), new Vector3(0f, -30f, 0f));
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Mental", gameObject.transform, new Vector3(scale * 4f, scale * 4f, scale * 4f), new Vector3(60f, -30f, 0f));
+                                newRune3 = MakeRune("Runes/Mental", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
                             break;
                         case "f":
                             if (displayText.Length == 0)
-                                newRune1 = MakeRune("Runes/Illusion", gameObject.transform, new Vector3(scale * 2.8f, scale * 2.8f, scale * 2.8f), new Vector3(-60f, -30f, 0f));
+                                newRune1 = MakeRune("Runes/Illusion", gameObject.transform, new Vector3(scale, scale , scale ), new Vector3(-spacing, -30f, 0f));
                             else if (displayText.Length == 1)
-                                newRune2 = MakeRune("Runes/World", gameObject.transform, new Vector3(scale * 3.2f, scale * 3.2f, scale * 3.2f), new Vector3(0f, -30f, 0f));
+                                newRune2 = MakeRune("Runes/World", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(0f, -30f, 0f));
                             else if (displayText.Length == 2)
-                                newRune3 = MakeRune("Runes/Ascendant", gameObject.transform, new Vector3(scale * 3f, scale * 3f, scale * 3f), new Vector3(60f, -30f, 0f));
+                                newRune3 = MakeRune("Runes/Ascendant", gameObject.transform, new Vector3(scale , scale , scale ), new Vector3(spacing, -30f, 0f));
                             break;
                         default:
                             break;
@@ -229,12 +230,12 @@ public class SpellDisplay : MonoBehaviour
         //Probably move this to when the spell activates, then deactivate it when a spell ends
         //Otherwise have it under where spell effects take place
         //Detects if haste is active and then modifies FOV
-        if (player.GetComponent<FirstPersonAIO>().sprintSpeed != 7)
+        if (player.GetComponent<FirstPersonAIO>().walkSpeed != 4)
         {
             if (controls.Player.CancelSpell.triggered)
             {
                 playerCamera.GetComponent<Camera>().fieldOfView = 60;
-                player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
+                player.GetComponent<FirstPersonAIO>().walkSpeed = 4;
                 HasteScreenEffect.SetActive(false);
             }
         }
@@ -488,7 +489,7 @@ public class SpellDisplay : MonoBehaviour
                     if (activeSpell == null)
                     {
                         displayText = "";
-                        player.GetComponent<FirstPersonAIO>().sprintSpeed = 30;
+                        player.GetComponent<FirstPersonAIO>().walkSpeed = 20;
                         spellEffectsTimer = spellLongevity;
                         hasteUI.SetActive(false);
                         activeSpell = "HASTE";
@@ -834,7 +835,7 @@ public class SpellDisplay : MonoBehaviour
                 break;
             case "HASTE":
                 playerCamera.GetComponent<Camera>().fieldOfView = 60;
-                player.GetComponent<FirstPersonAIO>().sprintSpeed = 7;
+                player.GetComponent<FirstPersonAIO>().walkSpeed = 4;
                 HasteScreenEffect.SetActive(false);
                 break;
             default:

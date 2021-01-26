@@ -5,9 +5,7 @@ using UnityEngine;
 public class VineWall : MonoBehaviour
 {
     public GameObject VineWall1;
-    public GameObject VineWall2;
-    public GameObject VineWallOpen1;
-    public GameObject VineWallOpen2;
+    public GameObject VineWallOpen;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,9 +13,7 @@ public class VineWall : MonoBehaviour
         if (other.transform.name == "Fireball(Clone)")
         {
             VineWall1.SetActive(false);
-            VineWall2.SetActive(false);
-            VineWallOpen1.SetActive(true);
-            VineWallOpen2.SetActive(true);
+            VineWallOpen.SetActive(true);
 
             PersistentManager.instance.burnVines = true;
             PersistentManager.instance.burnVinesCB.SetActive(true);
